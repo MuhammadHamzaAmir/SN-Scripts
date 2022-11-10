@@ -9,5 +9,15 @@
  * 
  */
 
+// Approaches to this Problem
+// 1. UI Policy Action - Not Applicable
+// 2. UI Action - In Question
+// 3. Client Script
+// 4. Script Include
+// 5. Business Rule
+
+
 // Condition
 (current.state == 1 || current.state == 2 || current.state == 5) && (!(current.assigned_to.nil()))
+
+//script
