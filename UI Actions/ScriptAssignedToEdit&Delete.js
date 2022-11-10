@@ -11,10 +11,11 @@
 
 // Approaches to this Problem
 // 1. UI Policy Action - Not Applicable
-// 2. UI Action - In Question
-// 3. Client Script
-// 4. Script Include
-// 5. Business Rule
+// 2. UI Action - In Question May be Not Applicable
+// 3. Client Script - Not Tested
+// 4. Script Include - Not Tested
+// 5. Business Rule - Not Tested
+// 6. ACLs - Applicable https://www.servicenow.com/community/it-service-management-forum/how-to-do-only-assignment-group-members-can-edit-the-respective/m-p/545229/page/2
 
 
 // Condition
