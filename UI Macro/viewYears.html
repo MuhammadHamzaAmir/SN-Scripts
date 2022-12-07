@@ -7,43 +7,108 @@
             grid-template-columns: 1fr 1fr;
             grid-gap: 20px;
         }
+
+        .grid-container-available {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-gap: 10px;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-gap: 20px;
+        }
+
         .yearscol1 {
             text-align: end;
             padding-right: 5%;
             padding-top: 3%;
         }
+
         .yearscol2 {
             text-align: start;
             padding-left: 5%;
             padding-top: 3%;
         }
-        .title-p {
-            font-size: 1em;
+
+        .title-years {
+            font-size: 1.2em;
             font-weight: bold;
-            margin-bottom: 2%;
+            margin-bottom: 1%;
+            text-align: center;
+        }
+
+        .datacol1 {
+            text-align: end;
+            padding-top: 3%;
+        }
+
+        .datacol2 {
+            text-align: center;
+            padding-top: 3%;
+        }
+
+        .datacol3 {
+            text-align: start;
+            padding-top: 3%;
         }
     </style>
 </head>
 
 <body>
-    <div class="grid-container">
-        <div class="yearscol1">
-            <p class="title-p">Years: Sum</p>
-            <p id="year1">5</p>
-            <p id="year2">5</p>
-            <p id="year3">5</p>
-            <p id="year4">4</p>
-            <p id="year5">45</p>
+
+    <div class="main-grid">
+        <div>
+            <div>
+                <p class="title-years" id="year-sum">Years: Sum</p>
+            </div>
+            <div class="grid-container">
+                <div class="yearscol1">
+                    <p id="year1">5</p>
+                    <p id="year2">5</p>
+                    <p id="year3">5</p>
+                    <p id="year4">4</p>
+                    <p id="year5">45</p>
+                </div>
+                <div class="yearscol2">
+                    <p id="year6">45</p>
+                    <p id="year7">45</p>
+                    <p id="year8">45</p>
+                    <p id="year9">45</p>
+                    <p id="year10">45</p>
+                </div>
+            </div>
         </div>
-        <div class="yearscol2">
-            <p class="title-p">Years: Sum</p>
-            <p id="year6">45</p>
-            <p id="year7">45</p>
-            <p id="year8">45</p>
-            <p id="year9">45</p>
-            <p id="year10">45</p>
+
+        <div>
+            <div>
+                <p class="title-years" id="years-avg">Data Available for</p>
+            </div>
+            <div class="grid-container-available">
+                <div class="datacol1" id="data-avail-1">
+                    <p id="para1">okay</p>
+                </div>
+                <div class="datacol2" id="data-avail-2">
+                    <p id="para2">okay</p>
+                </div>
+                <div class="datacol3" id="data-avail-3">
+                    <p id="para3">okay</p>
+                </div>
+            </div>
         </div>
+
     </div>
+
+    <script>
+        var para = document.createElement("p");
+        para.id = "para1";
+        var node = document.createTextNode("okay");
+        para.appendChild(node);
+        var element = document.getElementById("data-avail-1");
+        element.appendChild(para);
+    </script>
+
 </body>
 
 </html>
