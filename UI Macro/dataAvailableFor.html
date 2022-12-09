@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide" xmlns:j2="null" xmlns:g2="null">
+
+    <style>
+        .grid-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-gap: 20px;
+        }
+
+        .grid-container-available {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-gap: 10px;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-gap: 20px;
+        }
+
+        .yearscol1 {
+            text-align: end;
+            padding-right: 5%;
+            padding-top: 3%;
+        }
+
+        .yearscol2 {
+            text-align: start;
+            padding-left: 5%;
+            padding-top: 3%;
+        }
+
+        .title-years {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 1%;
+            text-align: center;
+        }
+
+        .datacol1 {
+            text-align: end;
+            padding-top: 3%;
+        }
+
+        .datacol2 {
+            text-align: center;
+            padding-top: 3%;
+        }
+
+        .datacol3 {
+            text-align: start;
+            padding-top: 3%;
+        }
+    </style>
+
+    <body onload="getAllYears()">
+        <div class="main-grid">
+            <div>
+                <div>
+                    <p class="title-years" id="year-sum"></p>
+                </div>
+                <div class="grid-container">
+                    <div class="yearscol1">
+                        <p id="year1"></p>
+                        <p id="year2"></p>
+                        <p id="year3"></p>
+                        <p id="year4"></p>
+                        <p id="year5"></p>
+                    </div>
+                    <div class="yearscol2">
+                        <p id="year6"></p>
+                        <p id="year7"></p>
+                        <p id="year8"></p>
+                        <p id="year9"></p>
+                        <p id="year10"></p>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div>
+                    <p class="title-years" id="data-avail"></p>
+                </div>
+                <div class="grid-container-available">
+                    <div class="datacol1" id="data-avail-1"></div>
+                    <div class="datacol2" id="data-avail-2"></div>
+                    <div class="datacol3" id="data-avail-3"></div>
+                </div>
+            </div>
+        </div>
+    </body>
+
+    <script language="javascript">
+
+		function getAllYears() {
+			var baseYear = g_form.getValue("start_year");
+			var dataAvail = g_form.getValue("data_available_for");
+
+			if (baseYear == ""){
+				baseYear = "";
+			}
+			else{
+				var i=1;
+				document.getElementById("year-sum").innerText = "Years: Sum";
+				while(i !=11 ){
+					if (i == 11){break};
+					var elem = document.getElementById("year"+i);
+					elem.innerText= "" + (parseInt(baseYear)+i) + " : " + g_form.getValue("sum_year_"+i);
+					i = i+1;
+				}	
+			}
+		
+			if (dataAvail != ""){
+				var i=1;
+				var dataArr = dataAvail.split(",");
+				document.getElementById("data-avail").innerText = "Data Available for";
+
+				while (i != 11){
+					if (i == 11){break};
+					dataArr = dataArr.filter(item => item !== ("year_"+i));
+					i = i+1;
+				}
+				dataArr = dataArr.filter(item => item !== ("collection")); 
+				dataArr = dataArr.filter(item => item !== ("tct_group"));
+				dataArr = dataArr.filter(item => item !== ("violated_rules")); 
+				
+				var helper = new GlideAjax('SVClientHelper');
+				helper.addParam('sysparm_name','getFpcTablesLabels');
+				helper.addParam('sysparm_all_data',dataArr);
+				helper.getXMLAnswer(callbackFunction);
+
+
+
+				function callbackFunction(response){
+					var answer = JSON.parse(response);
+					alert(answer.data);
+
+					dataArr = answer.data;
+		
+				
+					var j=0;
+					var midPoint = parseInt(dataArr.length/3);
+
+					while(j != dataArr.length){
+						if (j == dataArr.length){break};
+
+						var col = 1;
+
+						if (j >= (midPoint)){
+							if((midPoint*2) > j){
+									col=2;}
+						}
+						if (j >= (midPoint*2)){
+							if((midPoint*3) > j){
+									col=3;}
+						}
+						if (j > (midPoint*3)){col=3;}
+						var pTag = document.createElement("p");
+						pTag.id = dataArr[j];
+						var textNode = document.createTextNode(dataArr[j]);
+						pTag.appendChild(textNode);
+						var element = document.getElementById("data-avail-"+col);
+						element.appendChild(pTag);
+						j = j + 1;
+					}	
+			
+				}
+		
+			}
+			else{
+				dataAvail = "";
+			}
+
+		}					   
+
+    </script>
+
+</j:jelly>
