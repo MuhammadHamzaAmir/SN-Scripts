@@ -1,0 +1,58 @@
+<html>
+
+<head>
+    <style>
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-gap: 10px;
+        }
+        .title-years {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 1%;
+            text-align: center;
+        }
+
+        .datacol1 {
+            text-align: end;
+            padding-top: 3%;
+        }
+
+        .datacol2 {
+            text-align: center;
+            padding-top: 3%;
+        }
+
+        .datacol3 {
+            text-align: start;
+            padding-top: 3%;
+        }
+    </style>
+</head>
+
+<body>
+
+        <div>
+            <div>
+                <p class="title-years" id="data-avail"></p>
+            </div>
+            <div class="grid-container">
+                <div class="datacol1" id="data-avail-1"></div>
+                <div class="datacol2" id="data-avail-2"></div>
+                <div class="datacol3" id="data-avail-3"></div>
+            </div>
+        </div>
+
+    <script>
+        var para = document.createElement("p");
+        para.id = "para1";
+        var node = document.createTextNode("okay");
+        para.appendChild(node);
+        var element = document.getElementById("data-avail-1");
+        element.appendChild(para);
+    </script>
+
+</body>
+
+</html>
