@@ -1,0 +1,53 @@
+<html>
+
+<head>
+    <style>
+        .grid-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-gap: 20px;
+        }
+        .yearscol1 {
+            text-align: end;
+            padding-right: 3%;
+            padding-top: 3%;
+        }
+
+        .yearscol2 {
+            text-align: start;
+            padding-left: 3%;
+            padding-top: 3%;
+        }
+
+        .title-years {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 1%;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+            <div>
+                <p class="title-years" id="year-sum">Years: Sum</p>
+            </div>
+            <div class="grid-container">
+                <div class="yearscol1">
+                    <p id="year1">5</p>
+                    <p id="year2">5</p>
+                    <p id="year3">5</p>
+                    <p id="year4">4</p>
+                    <p id="year5">45</p>
+                </div>
+                <div class="yearscol2">
+                    <p id="year6">45</p>
+                    <p id="year7">45</p>
+                    <p id="year8">45</p>
+                    <p id="year9">45</p>
+                    <p id="year10">45</p>
+                </div>
+            </div>
+</body>
+
+</html>
