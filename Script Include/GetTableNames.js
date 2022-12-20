@@ -1,21 +1,21 @@
 function run() {
   var gr = new GlideRecord("sys_dictionary");
   gr.addEncodedQuery(
-    "sys_scope=1e30b5658775d91075f2ec280cbb35c4^nameLIKEfpc^sys_name!=C code^ORsys_name=NULL^sys_name!=C description^ORsys_name=NULL^sys_name!=Description^ORsys_name=NULL^sys_name!=Production area^ORsys_name=NULL^sys_name!=V code^ORsys_name=NULL^sys_name!=V description^ORsys_name=NULL"
+    "<QUERY>"
   );
 
   gr.query();
   var allData = [
     "country",
-    "fpc2471",
-    "fpc408",
-    "violated_rules",
-    "fpc448",
-    "fpc520",
+    "<code>",
+    "<code>",
+    "<code>",
+    "<code>",
+    "<code>",
     "market_region",
     "market_segment",
     "need_attention",
-    "production_area",
+    "<code>",
   ];
 
   var log = [];
@@ -42,12 +42,10 @@ function run() {
         tableNames.push(gr.getClassDisplayValue());
     }
 
-    // remove (FPC<number>) from table names
     tableNames = tableNames.map(function (item) {
         return item.replace(/\(FPC\d+\)/g, '');
     });
 
-    //remove fpc<number> elements from allData arary
     allData = allData.filter(function (item) {
         return !item.includes('fpc');
     });
@@ -61,10 +59,10 @@ function run() {
 run();
 
 
-getFpcTablesLabels: function(allData){
+get<Specific>TablesLabels: function(allData){
 		
 		var gr = new GlideRecord('sys_dictionary');
-		gr.addEncodedQuery('sys_scope=1e30b5658775d91075f2ec280cbb35c4^nameLIKEfpc^sys_name!=Ccode^ORsys_name=NULL^sys_name!=Cdescription^ORsys_name=NULL^sys_name!=Description^ORsys_name=NULL^sys_name!=Productionarea^ORsys_name=NULL^sys_name!=V code^ORsys_name=NULL^sys_name!=V description^ORsys_name=NULL');
+		gr.addEncodedQuery('<QUERY>');
 		gr.query();  
 		var log = [];
 		while (gr.next()) {

@@ -122,12 +122,12 @@
 					dataArr = dataArr.filter(item => item !== ("year_"+i));
 					i = i+1;
 				}
-				dataArr = dataArr.filter(item => item !== ("collection")); 
-				dataArr = dataArr.filter(item => item !== ("tct_group"));
-				dataArr = dataArr.filter(item => item !== ("violated_rules")); 
+				dataArr = dataArr.filter(item => item !== ("<some option>")); 
+				dataArr = dataArr.filter(item => item !== ("<some option>"));
+				dataArr = dataArr.filter(item => item !== ("<some option>")); 
 				
-				var helper = new GlideAjax('SVClientHelper');
-				helper.addParam('sysparm_name','getFpcTablesLabels');
+				var helper = new GlideAjax('<Client Script Include>');
+				helper.addParam('sysparm_name','<func name>');
 				helper.addParam('sysparm_all_data',dataArr);
 				helper.getXMLAnswer(callbackFunction);
 

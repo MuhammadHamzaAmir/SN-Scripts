@@ -49,12 +49,12 @@ console.log(res);
 
 /**
  * 
- * var gr = new GlideRecord('x_scvab_sv_volume_source');
+ * var gr = new GlideRecord('<table name>');
 gr.get('761872e0875f559060290ede8bbb3524');
 
 var result = {};
 
-if (!(gr.getValue("prognosis_data_set"))){
+if (!(gr.getValue("<fieldNameOf Table>"))){
 
     for (var i = 1; i <= 10; i++) {
         result["year_" + i] = 0;
@@ -63,8 +63,8 @@ if (!(gr.getValue("prognosis_data_set"))){
 }
 
 
-var svDataImport = new SVDataImport();
-var pgData = svDataImport.prognosisDataParse(gr.prognosis_data_set);
+var dataImport = new DataImport();
+var pgData = dataImport.dataParse(gr.field);
 
 for (var i = 0; i < pgData.length; i++) {
     for (var key in pgData[i]) {
