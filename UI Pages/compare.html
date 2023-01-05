@@ -1,0 +1,198 @@
+<!-- create a table with a black thin border 
+keep the tags small
+-->
+<html>
+
+<head>
+
+    <style>
+        .grid-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-gap: 2px;
+        }
+
+        .gridcol1 {
+            text-align: end;
+            padding-right: 5%;
+            padding-top: 3%;
+            width: 35%;
+        }
+
+        .gridcol2 {
+            text-align: start;
+            padding-left: 5%;
+            padding-top: 3%;
+            width: 45%;
+        }
+    </style>
+
+</head>
+
+<body>
+    <table border="1" cellpadding="3" cellspacing="1">
+        <tbody>
+
+            <!-- create a row with three <td> tags with value DS1, DS2, Diff 
+        and set the hidden property of DS1 to false    
+        -->
+            <tr>
+                <td id="ds1"></td>
+                <td id="ds1">Data-Set-1</td>
+                <td id="ds2">Data-Set-2</td>
+                <td id="diff">Difference</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <button onclick="clickOK()">OK</button>
+
+    <script>
+
+        // check if the table has rows with where the id of <td> starts with "year_"
+        // if yes, delete all the rows
+
+        function clickOK() {
+
+            // check if the table has rows already or not
+            if (document.getElementsByTagName("tbody")[0].rows.length > 1) {
+                for (var j = 0; j < 12; j++) {
+                    document.getElementsByTagName("tbody")[0].deleteRow(1);
+                }
+            }
+
+
+            for (var i = 1; i <= 10; i++) {
+                var row = document.createElement("tr");
+                var year = document.createElement("td");
+                var year_ds1 = document.createElement("td");
+                var year_ds2 = document.createElement("td");
+                var year_diff = document.createElement("td");
+                year.id = "year_" + i;
+                year_ds1.id = "year_" + i + "_ds1";
+                year_ds2.id = "year_" + i + "_ds2";
+                year_diff.id = "year_" + i + "_diff";
+                year.innerHTML = "Year-" + i;
+                year_ds1.width = "35%";
+                year_ds2.width = "35%";
+                // year_ds1.innerText = "ds1";
+                row.appendChild(year);
+                row.appendChild(year_ds1);
+                row.appendChild(year_ds2);
+                row.appendChild(year_diff);
+                document.getElementsByTagName("tbody")[0].appendChild(row);
+            }
+            var conversionsDS1 = {
+                "Denmark emission": ["C2 6"],
+                "Sweden, Truck, Gas": [
+                    "b3on"
+                ],
+            }
+
+            var conversionsDS2 = {
+                "Test Conversion Set - Separate conversio": [
+                    "1",
+                    "C2",
+                    "3o 6",
+                    "Co46"
+                ],
+                "Test Multiple Country specifications": [
+                    "6"
+                ]
+            }
+
+
+            // put the keys of the conversionsDS1 object in an array
+            var keysDS1 = Object.keys(conversionsDS1);
+            // put the keys of the conversionsDS2 object in an array
+            var keysDS2 = Object.keys(conversionsDS2);
+
+            // now put a lable in the first column of the table after Year-10 named "Conversions"
+            // then put keysDS1 in the second column of the table
+            // then put keysDS2 in the third column of the table
+            var conversion = document.createElement("tr");
+            var conversion_label = document.createElement("td");
+            conversion_label.innerHTML = "Conversions";
+            conversion.appendChild(conversion_label);
+
+            var conDS1 = "";
+            for (var i = 0; i < keysDS1.length; i++) {
+                conDS1 += keysDS1[i] + "<br/>";
+            }
+            var conversion_ds1 = document.createElement("td");
+            conversion_ds1.innerHTML = conDS1;
+            conversion.appendChild(conversion_ds1);
+
+            var conDS2 = "";
+            for (var i = 0; i < keysDS2.length; i++) {
+                conDS2 += keysDS2[i] + "<br/>";
+            }
+            var conversion_ds2 = document.createElement("td");
+            conversion_ds2.innerHTML = conDS2;
+            conversion.appendChild(conversion_ds2);
+            document.getElementsByTagName("tbody")[0].appendChild(conversion);
+
+            var conversion_diff = document.createElement("td");
+            conversion.appendChild(conversion_diff);
+
+            // now put a lable in the first column of the table after Year-10 named "Source Specification"
+            // then put the values of the conversionsDS1 object in the second column of the table
+            // then put the values of the conversionsDS2 object in the third column of the table
+            var source_spec = document.createElement("tr");
+            var source_spec_label = document.createElement("td");
+            source_spec_label.innerHTML = "Source<br/>Specifications";
+            source_spec.appendChild(source_spec_label);
+
+            var specDS1 = "";
+            for (var i = 0; i < keysDS1.length; i++) {
+                for (var j = 0; j < conversionsDS1[keysDS1[i]].length; j++) {
+                    specDS1 += conversionsDS1[keysDS1[i]][j] + "<br/>";
+                }
+            }
+            var source_spec_ds1 = document.createElement("td");
+            source_spec_ds1.innerHTML = specDS1;
+            source_spec.appendChild(source_spec_ds1);
+
+            var specDS2 = "";
+            for (var i = 0; i < keysDS2.length; i++) {
+                for (var j = 0; j < conversionsDS2[keysDS2[i]].length; j++) {
+                    specDS2 += conversionsDS2[keysDS2[i]][j] + "<br/>";
+                }
+            }
+            var source_spec_ds2 = document.createElement("td");
+            source_spec_ds2.innerHTML = specDS2;
+            source_spec.appendChild(source_spec_ds2);
+
+            var source_spec_diff = document.createElement("td");
+            source_spec.appendChild(source_spec_diff);
+
+
+            document.getElementsByTagName("tbody")[0].appendChild(source_spec);
+
+        }
+
+
+        // var conversion = document.createElement("tr");
+        // var conversion_label = document.createElement("td");
+        // conversion_label.innerHTML = "Conversion";
+        // conversion.appendChild(conversion_label);
+        // document.getElementsByTagName("tbody")[0].appendChild(conversion);
+
+        // var source_spec = document.createElement("tr");
+        // var source_spec_label = document.createElement("td");
+        // source_spec_label.innerHTML = "Source<br/>Specification";
+        // source_spec.appendChild(source_spec_label);
+        // document.getElementsByTagName("tbody")[0].appendChild(source_spec);
+
+
+
+        // var para = document.createElement("p");
+        // para.id = "para1";
+        // var node = document.createTextNode("okay");
+        // para.appendChild(node);
+        // var element = document.getElementById("data-avail-1");
+        // element.appendChild(para);
+    </script>
+</body>
+
+</html>
