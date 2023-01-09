@@ -1,0 +1,170 @@
+<html>
+
+<head>
+
+    <style>
+        /* centre the P tag */
+        p {
+            text-align: center;
+            margin-top: 1%;
+        }
+    </style>
+
+</head>
+
+<body>
+    <p style="display: none;" id="loading">Loading...</p>
+    <table border="1" id="table" cellpadding="3" cellspacing="2" hidden="true" style="margin-top: 1%; margin-bottom: 1%;">
+        <tbody>
+
+            <!-- create a row with three <td> tags with value DS1, DS2, Diff 
+        and set the hidden property of DS1 to false    
+        -->
+            <tr>
+                <td id="ds1"></td>
+                <td id="ds1">Data-Set-1</td>
+                <td id="ds2">Data-Set-2</td>
+                <td id="diff">Difference</td>
+            </tr>
+            <tr>
+                <td id="year_1">Year-1</td>
+                <td id="year_1_ds1" width="35%"></td>
+                <td id="year_1_ds2" width="35%"></td>
+                <td id="year_1_diff"></td>
+            </tr>
+            <tr>
+                <td id="year_2">Year-2</td>
+                <td id="year_2_ds1" width="35%"></td>
+                <td id="year_2_ds2" width="35%"></td>
+                <td id="year_2_diff"></td>
+            </tr>
+            <tr>
+                <td id="year_3">Year-3</td>
+                <td id="year_3_ds1" width="35%"></td>
+                <td id="year_3_ds2" width="35%"></td>
+                <td id="year_3_diff"></td>
+            </tr>
+            <tr>
+                <td id="year_4">Year-4</td>
+                <td id="year_4_ds1" width="35%"></td>
+                <td id="year_4_ds2" width="35%"></td>
+                <td id="year_4_diff"></td>
+            </tr>
+            <tr>
+                <td id="year_5">Year-5</td>
+                <td id="year_5_ds1" width="35%"></td>
+                <td id="year_5_ds2" width="35%"></td>
+                <td id="year_5_diff"></td>
+            </tr>
+            <tr>
+                <td id="year_6">Year-6</td>
+                <td id="year_6_ds1" width="35%"></td>
+                <td id="year_6_ds2" width="35%"></td>
+                <td id="year_6_diff"></td>
+            </tr>
+            <tr>
+                <td id="year_7">Year-7</td>
+                <td id="year_7_ds1" width="35%"></td>
+                <td id="year_7_ds2" width="35%"></td>
+                <td id="year_7_diff"></td>
+            </tr>
+            <tr>
+                <td id="year_8">Year-8</td>
+                <td id="year_8_ds1" width="35%"></td>
+                <td id="year_8_ds2" width="35%"></td>
+                <td id="year_8_diff"></td>
+            </tr>
+            <tr>
+                <td id="year_9">Year-9</td>
+                <td id="year_9_ds1" width="35%"></td>
+                <td id="year_9_ds2" width="35%"></td>
+                <td id="year_9_diff"></td>
+            </tr>
+            <tr>
+                <td id="year_10">Year-10</td>
+                <td id="year_10_ds1" width="35%"></td>
+                <td id="year_10_ds2" width="35%"></td>
+                <td id="year_10_diff"></td>
+            </tr>
+            <tr>
+                <td id="year_11">Conversions</td>
+                <td id="year_11_ds1"></td>
+                <td id="year_11_ds2"></td>
+                <td id="year_11_diff"></td>
+            </tr>
+            <tr>
+                <td id="year_12">Source<br/>Specifications</td>
+                <td id="year_12_ds1"></td>
+                <td id="year_12_ds2"></td>
+                <td id="year_12_diff"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <button onclick="clickOK()">OK</button>
+
+</body>
+
+<script>
+
+    function clickOK() {
+
+        // display the loading message
+        document.getElementById("loading").style.display = "block";
+
+        var conversionsDS1 = {
+            "Denmark emission": ["1"],
+            "Sweden, Truck, Gas": [
+                "2"
+            ],
+        }
+
+
+        var conversionsDS2 = {
+            "Test Conversion Set - Separate conversio": [
+                "1",
+                "2",
+                "3",
+                "4"
+            ],
+            "Test Multiple Country specifications": [
+                "1"
+            ]
+        }
+
+
+        // put the keys of the conversionsDS1 object in an array
+        var keysDS1 = Object.keys(conversionsDS1);
+        // put the keys of the conversionsDS2 object in an array
+        var keysDS2 = Object.keys(conversionsDS2);
+
+
+        //remove any existing content in the cell wth IDs "year_11_ds1", "year_11_ds2", "year_12_ds1", "year_12_ds2"
+        document.getElementById("year_11_ds1").innerHTML = "";
+        document.getElementById("year_11_ds2").innerHTML = "";
+        document.getElementById("year_12_ds1").innerHTML = "";
+        document.getElementById("year_12_ds2").innerHTML = "";
+
+        // add keys in Data-Set-1 column and in Daya-Set-2 column in row with id year_11
+        for (var i = 0; i < keysDS1.length; i++) {
+            document.getElementById("year_11_ds1").innerHTML += keysDS1[i] + "<br/>";
+        }
+        for (var i = 0; i < keysDS2.length; i++) {
+            document.getElementById("year_11_ds2").innerHTML += keysDS2[i] + "<br/>";
+        }
+
+        // add the values of the conversionsDS1 object in the Data-Set-1 column
+        for (var i = 0; i < keysDS1.length; i++) {
+            document.getElementById("year_12_ds1").innerHTML += conversionsDS1[keysDS1[i]] + "<br/>";
+        }
+        // add the values of the conversionsDS2 object in the Data-Set-2 column
+        for (var i = 0; i < keysDS2.length; i++) {
+            document.getElementById("year_12_ds2").innerHTML += conversionsDS2[keysDS2[i]] + "<br/>";
+        }
+
+        // remove hidden property of table
+        document.getElementById("table").removeAttribute("hidden");
+    }
+</script>
+
+</html>
