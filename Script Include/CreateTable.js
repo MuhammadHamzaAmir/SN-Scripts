@@ -174,7 +174,12 @@ CGTable.prototype = {
       attrs.put(fpcNumber, ca);
     } else {
       // tables without fpc numbers
-      tableNameWOBrackets = tableLabel.trim().replace(" ", "_").toLowerCase();
+      // underscore the table label
+      tableNameWOBrackets = tableLabel.replace(/ /g, "_").toLowerCase();
+      // remove the consecutive underscores
+      tableNameWOBrackets = tableNameWOBrackets.replace(/_+/g, "_");
+      // remove the underscore at the end
+      tableNameWOBrackets = tableNameWOBrackets.replace(/_$/, "");
       ca = new GlideColumnAttributes(tableNameWOBrackets);
       ca.setType("reference");
       ca.setUsePrefix(false);
@@ -183,7 +188,9 @@ CGTable.prototype = {
     dic_table.setColumnAttributes(attrs);
     dic_table.update();
 
+    // 		name=x_889851_test_hamz_specs_refrence_of_created_table^element=x_hamza_without_q_family
     var queryTable = codeCheck ? fpcNumber : tableNameWOBrackets;
+    // 		gs.info(queryTable+" XXX +"+tableName );
 
     var dic_gr_specs = new GlideRecord("sys_dictionary");
     dic_gr_specs.addEncodedQuery(
@@ -237,6 +244,147 @@ CGTable.prototype = {
       dic_gr_specs.next();
       dic_gr_specs.setValue("reference", "x_889851_test_hamz_production_area");
       dic_gr_specs.update();
+    }
+
+    var gr_list = new GlideRecord("sys_ui_list");
+    var gr_list_elem = new GlideRecord("sys_ui_list_element");
+    var sys_id_list_view = "";
+
+    if (codeCheck) {
+      // // adding a list layout for the table created
+      gr_list = new GlideRecord("sys_ui_list");
+      gr_list.initialize();
+      gr_list.setValue("name", tableName);
+      gr_list.setValue("view", "Default view");
+      gr_list.insert();
+
+      sys_id_list_view = "";
+      // sys_scope=2fbbfeec07a46110ab46f1d08c1ed0d2^name=x_889851_test_hamz_x_hamza_again_b
+      gr_list = new GlideRecord("sys_ui_list");
+      gr_list.addEncodedQuery(
+        "sys_scope=2fbbfeec07a46110ab46f1d08c1ed0d2^name=" + tableName
+      );
+      gr_list.query();
+      gr_list.next();
+      sys_id_list_view = gr_list.getUniqueValue();
+
+      // change the key 5 to 0
+      colObj[0] = colObj[5];
+      // remove the key 5
+      delete colObj[5];
+
+      colObj[Object.keys(colObj).length] = "display_value,Display Value";
+
+      for (i in colObj) {
+        gr_list_elem = new GlideRecord("sys_ui_list_element");
+        gr_list_elem.initialize();
+        gr_list_elem.setValue("element", colObj[i].split(",")[0]);
+        gr_list_elem.setValue("list_id", sys_id_list_view);
+        gr_list_elem.setValue("position", i);
+        gr_list_elem.insert();
+      }
+    } else {
+      // adding a list layout for the table created
+      gr_list = new GlideRecord("sys_ui_list");
+      gr_list.initialize();
+      gr_list.setValue("name", tableName);
+      gr_list.setValue("view", "Default view");
+      gr_list.insert();
+
+      // adding list elements for the table
+      sys_id_list_view = "";
+      // sys_scope=2fbbfeec07a46110ab46f1d08c1ed0d2^name=x_889851_test_hamz_x_hamza_again_b
+      gr_list = new GlideRecord("sys_ui_list");
+      gr_list.addEncodedQuery(
+        "sys_scope=2fbbfeec07a46110ab46f1d08c1ed0d2^name=" + tableName
+      );
+      gr_list.query();
+      gr_list.next();
+      sys_id_list_view = gr_list.getUniqueValue();
+
+      // table & attributes
+      // and then add the new element to the object {3: "display_value,Display Value"}
+      colObjCode[Object.keys(colObjCode).length + 1] =
+        "display_value,Display Value";
+
+      for (i in colObjCode) {
+        gr_list_elem = new GlideRecord("sys_ui_list_element");
+        gr_list_elem.initialize();
+        gr_list_elem.setValue("element", colObjCode[i].split(",")[0]);
+        gr_list_elem.setValue("list_id", sys_id_list_view);
+        gr_list_elem.setValue("position", i - 1);
+        gr_list_elem.insert();
+      }
+    }
+
+    // changing forms on tables
+    if (codeCheck) {
+      var formObj = {
+        0: "c_code",
+        1: "c_description",
+        2: ".split",
+        3: "v_code",
+        4: "v_description",
+        5: ".end_split",
+        6: ".begin_split",
+        7: "production_area",
+        8: ".split",
+      };
+
+      var gr_form = new GlideRecord("sys_ui_section");
+      gr_form.initialize();
+      gr_form.setValue("name", tableName);
+      gr_form.setValue("view", "Default view");
+      gr_form.setValue("title", "true");
+      gr_form.insert();
+
+      gr_form = new GlideRecord("sys_ui_section");
+      gr_form.addEncodedQuery(
+        "sys_scope=2fbbfeec07a46110ab46f1d08c1ed0d2^name=" + tableName
+      );
+      gr_form.query();
+      gr_form.next();
+      var form_sys_id = gr_form.getUniqueValue();
+
+      for (i in formObj) {
+        //inserting form element
+        var gr_form_elems = new GlideRecord("sys_ui_element");
+        gr_form_elems.initialize();
+        gr_form_elems.setValue("element", formObj[i]);
+        if (formObj[i].indexOf(".") > -1) {
+          gr_form_elems.setValue("type", formObj[i]);
+        }
+        gr_form_elems.setValue("position", i);
+        gr_form_elems.setValue("sys_ui_section", form_sys_id);
+        gr_form_elems.insert();
+      }
+    } else {
+      delete colObjCode[Object.keys(colObjCode).pop()];
+
+      var gr_form_c = new GlideRecord("sys_ui_section");
+      gr_form_c.initialize();
+      gr_form_c.setValue("name", tableName);
+      gr_form_c.setValue("view", "Default view");
+      gr_form_c.setValue("title", "true");
+      gr_form_c.insert();
+
+      gr_form_c = new GlideRecord("sys_ui_section");
+      gr_form_c.addEncodedQuery(
+        "sys_scope=2fbbfeec07a46110ab46f1d08c1ed0d2^name=" + tableName
+      );
+      gr_form_c.query();
+      gr_form_c.next();
+      var form_sys_id_c = gr_form_c.getUniqueValue();
+
+      for (i in colObjCode) {
+        //inserting form element
+        var gr_form_elems_c = new GlideRecord("sys_ui_element");
+        gr_form_elems_c.initialize();
+        gr_form_elems_c.setValue("element", colObjCode[i].split(",")[0]);
+        gr_form_elems_c.setValue("position", i - 1);
+        gr_form_elems_c.setValue("sys_ui_section", form_sys_id_c);
+        gr_form_elems_c.insert();
+      }
     }
   },
 
