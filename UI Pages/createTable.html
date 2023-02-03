@@ -1,0 +1,68 @@
+<html>
+    <head>
+
+        <style>
+            .div-style {
+                display: inline-block;
+                margin: 4px;
+            }
+           .label-fields {
+                display: inline-block;
+                width: 100px;
+                text-align: right;
+                font-weight: 600;
+            }
+            .input-fields {
+                display: inline-block;
+                width: 200px;
+                border-radius: 3px;
+            }
+            .loading {
+                display: none;
+                color: red;
+                font-weight: 900;
+            }
+            .output {
+                font-weight: 900;
+            }
+        </style>
+
+    </head>
+
+    <body>
+
+        <!-- create two input fields with labels 'Table Label' & 'FPC Number'
+            make sure that the fields are side by side 
+         -->
+        <div class="div-style">
+            <label class="label-fields" for="tableLabel">Table Label</label>
+            <input class="input-fields" type="text" id="tableLabel" name="tableLabel"/>
+        </div>
+
+        <div class="div-style">
+            <label class="label-fields" for="fpcNumber">FPC Number</label>
+            <input class="input-fields" type="number" id="fpcNumber" name="fpcNumber"/>
+        </div>
+
+        <div class="div-style">
+            <p class="loading" id="result">Loading...</p>
+        </div>
+
+        <script>
+
+            // if fpc number is empty then set its color to red and display an alert
+            document.getElementById("result").style.display = "block";
+            document.getElementById("result").style.color = "black";
+            document.getElementById("result").innerHTML = "Please enter FPC Number";
+
+
+
+
+            
+
+        </script>
+
+
+    </body>
+
+</html>
