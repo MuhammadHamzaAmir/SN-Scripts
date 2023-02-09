@@ -87,33 +87,158 @@ CGTable.prototype = {
 
     // adding to app modules
 
-    //         var tgr = new GlideRecord("sys_db_object");
-    //         tgr.addEncodedQuery("sys_update_nameISNOTEMPTY^name=" + tableName + "^sys_scope=2fbbfeec07a46110ab46f1d08c1ed0d2"); // app sys_id
-    //         tgr.query();
-    //         tgr.next();
-    //         var tabsys_id = tgr.getUniqueValue();
-    //         var tab_lab = tgr.label;
-    //         // gs.print(tab_lab);
+    var tgr = new GlideRecord("sys_db_object");
+    tgr.addEncodedQuery(
+      "sys_update_nameISNOTEMPTY^name=" +
+        tableName +
+        "^sys_scope=2fbbfeec07a46110ab46f1d08c1ed0d2"
+    ); // app sys_id
+    tgr.query();
+    tgr.next();
+    var tabsys_id = tgr.getUniqueValue();
+    var tab_lab = tgr.label;
 
-    //         var igr = new GlideRecord("sys_app_module");
-    //         igr.initialize();
-    //         igr.title = tab_lab;
-    //         igr.setValue("application", "3fbb326007e46110ab46f1d08c1ed04c"); // app menu sys_id not of application
-    //         igr.setValue("roles", "x_889851_test_hamz.user");
-    //         igr.name = tableName;
-    //         igr.insert();
+    // adding the module record
+    var igr = new GlideRecord("sys_app_module");
+    igr.initialize();
+    igr.title = tab_lab;
+    igr.setValue("application", "3fbb326007e46110ab46f1d08c1ed04c"); // app menu sys_id not of application
+    igr.setValue("roles", "x_889851_test_hamz.user");
+    igr.name = tableName;
+    igr.insert();
 
-    //         // changing the order
-    //         var mod_gr = new GlideRecord("sys_app_module");
-    //         mod_gr.addEncodedQuery("application=3fbb326007e46110ab46f1d08c1ed04c^order!=0");
-    //         mod_gr.orderBy("order");
-    //         mod_gr.query();
-    //         var info_mods = {};
-    //         while (mod_gr.next()) {
-    //             info_mods[mod_gr.getValue("title")] = mod_gr.getValue("order");
-    //         }
-    //         for (i in info_mods)
-    //             gs.print(info_mods[i] + " " + i);
+    // get order of technical options
+    var techOpsgr = new GlideRecord("sys_app_module");
+    techOpsgr.addEncodedQuery(
+      "application=3fbb326007e46110ab46f1d08c1ed04c^title=Technical Options"
+    );
+    techOpsgr.query();
+    techOpsgr.next();
+    var initOrder = parseFloat(techOpsgr.getValue("order"));
+
+    // get order of operational data
+    var opDatagr = new GlideRecord("sys_app_module");
+    opDatagr.addEncodedQuery(
+      "application=3fbb326007e46110ab46f1d08c1ed04c^title=Operational Data"
+    );
+    opDatagr.query();
+    opDatagr.next();
+    var finalOrder = parseFloat(opDatagr.getValue("order"));
+
+    //getting the modules in between tech ops & op data
+    var mod_gr = new GlideRecord("sys_app_module");
+    mod_gr.addEncodedQuery(
+      "application=3fbb326007e46110ab46f1d08c1ed04c^order!=0^order>" +
+        initOrder +
+        "^order<" +
+        finalOrder
+    );
+    mod_gr.orderBy("order");
+    mod_gr.query();
+    var info_mods = {};
+    var same_info_mods = {};
+    var tableLabelwoFpc = tableLabel.replace(/\(.*?\)/g, "").trim();
+    while (mod_gr.next()) {
+      // check if a table with same label exists or not
+      if (
+        mod_gr
+          .getValue("title")
+          .toLowerCase()
+          .indexOf(tableLabelwoFpc.toLowerCase()) > -1
+      ) {
+        same_info_mods[mod_gr.getValue("title")] = mod_gr.getValue("order");
+      } else {
+        info_mods[
+          mod_gr
+            .getValue("title")
+            .replace(/\(.*?\)/g, "")
+            .trim()
+        ] = mod_gr.getValue("order");
+      }
+    }
+    var newOrder = 0;
+    var infoModsKeys = Object.keys(info_mods);
+    // if there are tables with same label already exists
+    if (Object.keys(same_info_mods).length > 1) {
+      var befTableLabelOrd = 0;
+      for (i = 0; i < infoModsKeys.length; i++) {
+        if (infoModsKeys[i] === tableLabelwoFpc) {
+          if (i !== 0) {
+            befTableLabelOrd = parseFloat(info_mods[infoModsKeys[i - 1]]);
+            break;
+          } else if (i === 0) {
+            befTableLabelOrd = initOrder;
+            break;
+          }
+        }
+      }
+
+      var afTableLabelOrd = 0;
+      for (i = 0; i < infoModsKeys.length; i++) {
+        if (infoModsKeys[i] === tableLabelwoFpc) {
+          if (i !== infoModsKeys.length - 1) {
+            afTableLabelOrd = parseFloat(info_mods[infoModsKeys[i + 1]]);
+            break;
+          } else if (i === infoModsKeys.length - 1) {
+            afTableLabelOrd = finalOrder;
+            break;
+          }
+        }
+      }
+
+      var fpcNumberOnly = parseFloat(tableLabel.match(/\d+/g).map(Number)[0]);
+
+      var keysList = Object.keys(same_info_mods);
+
+      for (i = 0; i < keysList.length; i++) {
+        var fpcNumberKey = parseFloat(keysList[i].match(/\d+/g).map(Number)[0]);
+
+        if (fpcNumberOnly < fpcNumberKey) {
+          // case-1 if the table label is in-between the keys
+          if (i !== 0) {
+            newOrder =
+              (parseFloat(same_info_mods[keysList[i]]) +
+                parseFloat(same_info_mods[keysList[i - 1]])) /
+              2;
+            break;
+          }
+          // case-2 if the table label is the first key
+          else if (i === 0) {
+            newOrder =
+              (parseFloat(same_info_mods[keysList[i]]) + befTableLabelOrd) / 2;
+            break;
+          }
+        }
+      }
+      // case-3 if the table label is the end key
+      if (newOrder === 0) {
+        newOrder =
+          (parseFloat(same_info_mods[keysList[keysList.length - 1]]) +
+            afTableLabelOrd) /
+          2;
+      }
+    } else {
+      for (i = 0; i < infoModsKeys.length; i++) {
+        if (!(tableLabelwoFpc > infoModsKeys[i])) {
+          if (i !== 0) {
+            newOrder =
+              (parseFloat(info_mods[infoModsKeys[i]]) +
+                parseFloat(info_mods[infoModsKeys[i - 1]])) /
+              2;
+            break;
+          } else if (i === 0) {
+            newOrder = (parseFloat(info_mods[infoModsKeys[i]]) + initOrder) / 2;
+            break;
+          }
+        }
+      }
+      if (newOrder === 0) {
+        newOrder =
+          (finalOrder +
+            parseFloat(info_mods[infoModsKeys[infoModsKeys.length - 1]])) /
+          2;
+      }
+    }
 
     //         var item = tableLabel;
 
@@ -142,12 +267,17 @@ CGTable.prototype = {
     //             assignNum = midPoint;
     //         }
 
-    //         var ord_gr = new GlideRecord("sys_app_module");
-    //         ord_gr.addEncodedQuery("application=3fbb326007e46110ab46f1d08c1ed04c^order=0^ORorder=NULL^title=" + tableLabel + "^nameLIKE" + tableName);
-    //         ord_gr.query();
-    //         ord_gr.next();
-    //         ord_gr.order = assignNum;
-    //         ord_gr.update();
+    var ord_gr = new GlideRecord("sys_app_module");
+    ord_gr.addEncodedQuery(
+      "application=3fbb326007e46110ab46f1d08c1ed04c^order=0^ORorder=NULL^title=" +
+        tableLabel +
+        "^nameLIKE" +
+        tableName
+    );
+    ord_gr.query();
+    ord_gr.next();
+    ord_gr.order = newOrder;
+    ord_gr.update();
 
     var table_sys_id_gr = new GlideRecord("sys_db_object");
     table_sys_id_gr.addEncodedQuery(
