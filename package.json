@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/MuhammadHamzaAmir/SN-Scripts#readme",
   "dependencies": {
+    "node-fetch": "^3.3.0",
+    "xhr2": "^0.2.1",
     "xlsx": "^0.18.5"
   }
 }
