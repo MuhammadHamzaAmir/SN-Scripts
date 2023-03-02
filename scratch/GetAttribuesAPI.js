@@ -4,9 +4,9 @@
 // var ca = new GlideTableCreator("test", "test");
 // for (var member in ca) gs.print(member);
 
-// *** Script: 40 Specification Option - Parent
-// *** Script: 30 Specs - Refrence of Created Tables
-// *** Script: 10 Main Tables
+//  40 Specification Option - Parent
+//  30 Specs - Refrence of Created Tables
+//  10 Main Tables
 
 // var obj = {
 //     "Main Tables": "10",
@@ -204,11 +204,230 @@
 //   console.log("yes");
 // }
 
-var colObjCode = {
-  1: "code,Code",
-  2: "description,Description",
-};
-colObjCode[Object.keys(colObjCode).length + 1] = "display_value,Display Value";
+// var colObjCode = {
+//   1: "code,Code",
+//   2: "description,Description",
+// };
+// colObjCode[Object.keys(colObjCode).length + 1] = "display_value,Display Value";
 
-// remove the last element from the object
-delete colObjCode[Object.keys(colObjCode).pop()];
+// // remove the last element from the object
+// delete colObjCode[Object.keys(colObjCode).pop()];
+
+// var tableLabel = "Hamza Tesla (FPC17)";
+// // remove the brackets and the content inside them
+// var tableName = tableLabel.replace(/\(.*?\)/g, "").trim();
+// console.log(tableName);
+
+// var tableLabel = "Hamza Tesla (FPC17)";
+// var checkTabel = "Test Hamza Now (FPC25)";
+// var checkTabelwoFpc = checkTabel.replace(/\(.*?\)/g, "").trim();
+
+// // check checkTabelwoFpc exists in tableLabel and first lowercase the tableLabel
+// if (tableLabel.toLowerCase().indexOf(checkTabelwoFpc.toLowerCase()) > -1) {
+//   console.log("yes");
+// }
+
+// var colObjCode = {
+//   1: "code,Code",
+//   2: "description,Description",
+// };
+
+// // get the total length of the object
+// var objLength = Object.keys(colObjCode).length;
+// console.log(objLength);
+
+// var same_info_mods = {
+//   "Cab type (FPC42)": 190,
+//   "Cab type (FPC92)": 195,
+//   "Cab type (FPC889)": 200,
+// };
+
+
+// // Script: B Hamza:120,
+// //  B Hamza Axle:130,
+// //  B Hamza Tesla:145,
+// //  B Hamza Tesla SX:150,
+//   // "Cab type (FPC42)": 190,
+//   // "Cab type (FPC92)": 195,
+//   // "Cab type (FPC889)": 200,
+// //  No Hamza V:300,
+// //  P Hamza 4:400,
+// //  V Hamza Tes:525,
+// //  X Hamza:580,
+// //  Y Hamza 6:620,
+
+// // create an object named info_mods with above info
+// var info_mods = {  
+//   "B Hamza": 120,
+//   "B Hamza Axle": 130,
+//   "B Hamza Tesla": 145,
+//   "B Hamza Tesla SX": 150,
+//   "Cab type": 200,
+//   "No Hamza V": 300,
+//   "P Hamza 4": 400,
+//   "V Hamza Tes": 525,
+//   "X Hamza": 580,
+//   "Y Hamza 6": 620,
+// };
+
+// // get the element value before "Cab type" in the object info_mods
+// var tableLabel = "Cab type (FPC80)";
+
+// var tableLabelwoFPC = tableLabel.replace(/\(.*?\)/g, "").trim();
+
+// var befTableLabelOrd = 0;
+// var initOrder = 105;
+// var finalOrder = 700;
+// var infoModsKeys = Object.keys(info_mods);
+// for (var i=0; i<infoModsKeys.length; i++){
+//   if (infoModsKeys[i] === tableLabelwoFPC) {
+//     if (i !== 0){
+//       befTableLabelOrd = info_mods[infoModsKeys[i-1]];
+//       break;
+//     }
+
+//     else if (i === 0){
+//       befTableLabelOrd = initOrder;
+//       break;
+//     }
+//   }
+// }
+
+// var afTableLabelOrd = 0;
+// for (var i=0; i<infoModsKeys.length; i++){
+//   if (infoModsKeys[i] === tableLabelwoFPC) {
+//     if (i !== infoModsKeys.length-1){
+//       afTableLabelOrd = info_mods[infoModsKeys[i+1]];
+//       break;
+//     }
+
+//     else if (i === infoModsKeys.length-1){
+//       afTableLabelOrd = finalOrder;
+//       break;
+//     }
+//   }
+// }
+
+
+
+// var newOrder = 0;
+
+// var fpcNumberOnly = parseInt(tableLabel.match(/\d+/g).map(Number)[0]);
+
+// var keysList = Object.keys(same_info_mods);
+
+// for (var i=0; i < keysList.length; i++) {
+
+//   var fpcNumberKey = parseInt(keysList[i].match(/\d+/g).map(Number)[0]);
+
+//   if(fpcNumberOnly < fpcNumberKey){
+//     // case-1 if the table label is in-between the keys
+//     if (i !== 0) {
+//       newOrder = Math.round(
+//         (same_info_mods[keysList[i]] + same_info_mods[keysList[i - 1]]) / 2
+//       );
+//       break;
+//     }
+//     // case-2 if the table label is the first key
+//     else if (i === 0) {
+//       newOrder = Math.round((same_info_mods[keysList[i]] + befTableLabelOrd) / 2);
+//       break;
+//     }
+//   }
+// }
+// // case-3 if the table label is the end key
+// if (newOrder === 0){
+//   newOrder = Math.round((same_info_mods[keysList[keysList.length-1]] + afTableLabelOrd) / 2);
+// }
+
+// console.log(newOrder);
+
+
+// var info_mods = {
+//   "B Hamza": 120,
+//   "B Hamza Axle": 130,
+//   "B Hamza Tesla": 145,
+//   "B Hamza Tesla SX": 150,
+//   "Cab type": 200,
+//   "No Hamza V": 300,
+//   "P Hamza 4": 400,
+//   "V Hamza Tes": 525,
+//   "X Hamza": 580,
+//   "Y Hamza 6": 620,
+// };
+
+// var newOrder = 0;
+
+// // get the element value before "Cab type" in the object info_mods
+// var tableLabel = "Jab Fuel (FPC80)";
+
+// var tableLabelwoFPC = tableLabel.replace(/\(.*?\)/g, "").trim();
+// var initOrder = 105;
+// var finalOrder = 700;
+// var infoModsKeys = Object.keys(info_mods);
+
+
+// for (var i=0; i<infoModsKeys.length; i++){
+//   if (!(tableLabelwoFPC > infoModsKeys[i])) {
+//     if (i !== 0){
+//       newOrder = Math.round((info_mods[infoModsKeys[i]] + info_mods[infoModsKeys[i-1]]) / 2);
+//       break;
+//     }
+//     else if (i === 0){
+//       newOrder = Math.round((info_mods[infoModsKeys[i]] + initOrder) / 2);
+//       break;
+//     }
+//   }
+// }
+// if (newOrder === 0){
+//   newOrder = Math.round((finalOrder + info_mods[infoModsKeys[infoModsKeys.length-1]]) / 2);
+// }
+// console.log(newOrder);
+
+// var gr = new GlideRecord("u_duration_table");
+// gr.get("95acbb030770e110ab46f1d08c1ed023");
+// var created = gr.getValue("sys_created_on");
+
+
+
+
+// var strDate = new GlideDateTime(created); 
+// var endDate = new GlideDateTime(); 
+
+// var diffSeconds = gs.dateDiff(strDate.getDisplayValueInternal(),endDate.getDisplayValueInternal(), false);  
+// gs.info(diffSeconds);
+// gr.u_duration_test = diffSeconds;
+// gr.update();
+
+// gs.info("str disp " + strDate.getDisplayValue()+ " str disp int"+ strDate.getDisplayValueInternal())
+// gs.info("end disp " + endDate.getDisplayValue()+ " end disp int"+ endDate.getDisplayValueInternal())
+
+// var tes = new GlideDateTime();
+// gs.info(tes.getDisplayValueInternal());
+
+var tableLabel = "Cab type (FPC344)";
+var tableLabelwoFpc = tableLabel.replace(/\(.*?\)/g, "").trim();
+// // check if table contains (FPC<numbeR>)
+
+// if (tableLabel.includes("(FPC")) {
+//   var fpcNumberOnly = parseInt(tableLabel.match(/\d+/g).map(Number)[0]);
+//   gs.info(fpcNumberOnly);
+// }
+
+
+var same_info_mods = {
+  "Cab type (FPC42)": 190,
+  "Cab type (FPC92)": 195,
+  "Cab type (FPC889)": 200,
+};
+
+// check if tableLabelwoFPC exists as substring in 'same_info_mods' keys
+var keysList = Object.keys(same_info_mods);
+var existCheck = false;
+for (var i=0; i < keysList.length; i++) {
+    if (keysList[i].includes(tableLabelwoFpc)) {
+        existCheck = true;
+        break;
+    }
+}
+console.log(existCheck);
