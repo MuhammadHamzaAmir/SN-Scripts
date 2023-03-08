@@ -1,0 +1,46 @@
+<html>
+    <head>
+    </head>
+
+    <body>
+
+        <label for="startdate">Start Date</label>
+        <input id="startdate" type="date" />
+        <label for="enddate">End Date</label>
+        <input id="enddate" type="date" />
+
+        <button id="filter" onclick="filter()">Filter</button>
+        <button id="clear" onclick="removeFilter()">Clear</button>
+
+        <p id="res">OK: </p>
+
+        <script>
+
+            
+            var my_dashboardMessageHandler = new DashboardMessageHandler("incident_date_range_filter_dashboard");
+
+            function filter() {
+                var startdate = document.getElementById("startdate").value;
+                var enddate = document.getElementById("enddate").value;
+                if (startdate == "" || enddate == "") {
+                    alert("Please select a start and end date");
+                    return;
+                }
+                my_dashboardMessageHandler.publishFilter('incident', "sys_updated_onBETWEENjavascript: gs.dateGenerate('"+startdate+"', '00: 00: 00')@javascript: gs.dateGenerate('"+enddate+"', '23: 59: 59')");
+                if (Date.parse(startdate) > Date.parse(enddate)) {
+                    alert("Start date must be before end date");
+                    return;
+                }
+                document.getElementById("res").innerHTML = "OK: "+ startdate + " " + enddate;
+            } 
+            function removeFilter() {
+                my_dashboardMessageHandler.removeFilter();
+                document.getElementById("res").innerHTML = "OK: ";
+            }
+            
+
+
+
+        </script>
+    </body>
+</html>
