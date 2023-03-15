@@ -7,6 +7,8 @@ CGTable.prototype = {
     // c_code (set as unique), v_code (set as unique), v_description,
     // c_description, and description (set as Display Value).
 
+    gs.getSession().impersonate("<sys_id_of_user>"); // sys_id of <admin>
+
     var currentAppID = gs.getCurrentApplicationId();
     gs.setCurrentApplicationId("2fbbfeec07a46110ab46f1d08c1ed0d2");
     var tableName = name;
@@ -519,6 +521,7 @@ CGTable.prototype = {
     }
 
     gs.setCurrentApplicationId(currentAppID);
+    gs.getSession().onlineUnimpersonate();
 
     // 	return JSON.stringify({});
   },
