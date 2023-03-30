@@ -24,7 +24,7 @@ if (grAudit.getRowCount() > 0) {
         ":  " +
         comment +
         " (" +
-        grAudit.sys_created_on +
+        grAudit.getDisplayValue('sys_created_on') +
         ")" +
         "\n";
     } else {
