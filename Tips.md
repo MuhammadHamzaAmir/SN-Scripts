@@ -7,7 +7,7 @@ instead of using this
 var inputs = {};
 inputs['first_name'] = producer.first_name ;
 ```
-&emsp; use this instead &nbsp; [Source](https://support.servicenow.com/kb?id=kb_article_view&sysparm_article=KB0832622 "Source")
+&emsp; use this &nbsp; [Source](https://support.servicenow.com/kb?id=kb_article_view&sysparm_article=KB0832622 "Source")
 
 ```javascript
 var inputs = {};
