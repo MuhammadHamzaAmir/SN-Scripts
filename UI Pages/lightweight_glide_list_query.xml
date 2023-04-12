@@ -1,0 +1,148 @@
+<!-- Add a query -->
+<!-- Usage:  <g:macro_invoke macro="x_scvab_sv_lightweight_glide_list_query" id="u_name" name="my_approvers" control_name="myListCollector" reference="sys_user_group" can_write="true" query="type=db1d65461ba1ad10df25400de54bcb84" /> -->
+
+<?xml version="1.0" encoding="utf-8" ?>
+<j:jelly trim="true" xmlns:j="jelly:core" xmlns:g="glide" xmlns:j2="null" xmlns:g2="null">
+  <g:requires name="scripts/slushbucket.js"/>
+  <!--
+	  Simplified glide list implemenation for use within macros. Runs entirely in a single phase. 
+	  Doesn't support clickthrough or m2m edit.
+	  
+	  Requires the following variables be set prior to execution:
+	  
+	  jvar_reference  where are we pulling our list from e.g. sys_user
+	  jvar_list_data  current value e.g. abc123,def456
+	  jvar_can_write  can we edit this?
+	  jvar_control_name  name of this control on screen?
+	  jvar_query query to apply for list
+	  -->
+	<div data-sn-macro-sys-id="${jvar_macro_sys_id}">
+  <j:set var="jvar_control_name_actual" value="${jvar_control_name}" /> 
+  <j:set var="jvar_control_name" value="z${jvar_control_name}" />
+  <g:evaluate var="jvar_current_user" expression="gs.getUserDisplayName()" />
+  <g:evaluate var="jvar_current_user_id" expression="gs.getUserID()" />
+  
+  <j:if test="${!jvar_can_write}">
+	<g:get_distribution_list ref="${jvar_reference}" readonly="true" ensure="true" record="${jvar_list_data}" />
+  </j:if>
+  <j:if test="${jvar_can_write}">
+	<SPAN id="${jvar_control_name}_edit">
+		<TABLE cellSpacing="1" cellPadding="1" border="0">
+		<TR class="featureListRoleGroup">
+			<TD>
+				<!-- left selection -->
+				<SELECT id="select_0${jvar_control_name_actual}" style="margin:2px; WIDTH: 160px" multiple="yes" 
+					size="4" name="select_0${jvar_control_name_actual}" aria-label="${jvar_label}, role list">
+					<g:get_distribution_list ref="${jvar_reference}" 
+						record="${jvar_list_data}" type="current" />
+				</SELECT>
+			</TD>
+			<TD class="bodySmall" vAlign="center">
+				<!-- add / remove buttons -->
+				<TABLE cellSpacing="0" cellPadding="0" border="0">
+					<j:if test="${jvar_reference == 'sys_user'}" >
+					    <TR>
+							<TD>
+								<A 
+									onclick="addChoiceFromValueAndDisplay(gel('select_0${jvar_control_name_actual}'), '$[jvar_current_user_id]', '$[jvar_current_user]', true);synchLists('${jvar_control_name_actual}');">
+									<IMG width="16" height="16" alt="${gs.getMessage('Add me')}" title="${gs.getMessage('Add me')}" src="images/icons/user_obj.gifx" border="0"/>
+								</A>
+							</TD>
+						</TR>
+					</j:if>
+					<TR>
+						<TD>
+							<A aria-label="${jvar_label}, Remove selected item" class="btn btn-default btn-ref" tabindex="0" onclick="simpleRemoveOption(gel('select_0${jvar_control_name_actual}'));synchLists('${jvar_control_name_actual}');">
+								<SPAN class="icon icon-cross" width="16" height="16" title="${gs.getMessage('Remove selected item')}"
+									src="images/delete_edit.gifx" alt="${gs.getMessage('Remove selected item')}" border="0" />
+							</A>
+						</TD>
+					</TR>
+					<TR>
+						<TD>
+							<A aria-label="${jvar_label}, lock" tabindex="0" class="btn btn-default btn-ref icon icon-unlocked lockClass" onclick="lock(this, '${jvar_control_name}', '${jvar_control_name}_edit', '${jvar_control_name}_nonedit', 'select_0${jvar_control_name_actual}', '${jvar_control_name}_nonedit')" id="${jvar_control_name}_lock">
+							</A>
+						</TD>
+					</TR>
+				</TABLE>
+			</TD>
+		</TR>
+		<TR>
+			<TD class="featureListRoleGroup">
+				<input id="sys_display.${jvar_control_name}" name="sys_display.${jvar_control_name}" class="featureListRoleList ${jvar_input_class_name}"
+					onfocus="if (!this.ac) new AJAXReferenceCompleter(this, '${jvar_control_name}', '${jvar_dependent}', '${jvar_ref_qual_elements}', '${jvar_reference}');"
+					onkeydown="return acReferenceKeyDown(this, event);" onkeyup="return acReferenceKeyUp(this, event)"
+					onkeypress="return acReferenceKeyPress(this, event)"
+					function="addChoiceLocal('${jvar_control_name}', '${jvar_control_name_actual}')"
+					autocomplete="off" aria-label="${jvar_label}"/>
+				<a
+					onclick="reflistOpen( '${jvar_control_name_actual}', 'not', '${jvar_reference}', '', '', '', '${jvar_query}' );mousePositionSave(event);"
+					tabindex="0" class="${jvar_input_button_name} featureListRoleOpenList" aria-label="${jvar_label}, Lookup using list">
+					<img src="images/reference_list.gifx" border="0" alt="${gs.getMessage('Lookup using list')}" width="20" height="18" />
+				</a>
+			</TD>
+
+		</TR>
+		</TABLE>
+	</SPAN>
+	<SPAN id="${jvar_control_name}_nonedit">
+		<g:get_distribution_list ref="${jvar_reference}" readonly="true" ensure="true" record="${jvar_list_data}" />
+	</SPAN>
+	<img aria-label="${jvar_label}, unlock form group" tabindex="0" id="${jvar_control_name}_unlock" onclick="unlock(this, '${jvar_control_name}', '${jvar_control_name}_edit', '${jvar_control_name}_nonedit')"
+		src="images/view_edit.pngx"
+		style="cursor: pointer; display: inline; margin-left: 2px;"
+		alt="Unlock"/>
+  </j:if>
+  <input type="HIDDEN" name="${jvar_control_name_actual}" id="${jvar_control_name_actual}" value="${jvar_list_data}"  class="${jvar_question_widget_class}" />
+  <input type="HIDDEN" name="${jvar_control_name}" id="${jvar_control_name}" value="hello"/>
+  <input type="HIDDEN" name="sys_original.${jvar_control_name}" value="${jvar_list_data}"/>
+  <input NAME="make_spacing_ok" style="visibility: hidden; width:1px" title=""/>
+  <j:if test="${jvar_can_write}">
+  <script>    
+  function addTextValue(e, selectID, id) {
+      var keyCode = getKeyCode(e);   
+      if (keyCode == KEY_ENTER) {
+	    addChoiceFromInput(selectID, id);
+	    return false; //cancel the event
+      } 
+      return true; // continue event processing
+  }
+	  
+  function addChoiceLocal(fieldid, actualfieldid) {
+	  var selectBox = gel('select_0'+ actualfieldid);
+	  var value = gel(fieldid).value;
+	  var displayWidget = gel('sys_display.' + fieldid);
+	  var display = displayWidget.value;
+	  if (!isValueAlreadyAdded(selectBox, value)) {
+		  var opt = document.createElement("option");
+		  opt.value = value;
+		  opt.text = display;
+		  selectBox.options.add(opt);
+		  synchLists(actualfieldid);
+	  }
+	  displayWidget.value = '';
+  }
+
+  function synchLists(actualfieldid) {
+         var sel0 = gel('select_0' + actualfieldid);
+	 var distribution = gel(actualfieldid);
+	 var ovalue = distribution.value;
+         saveAllSelected([ sel0 ], [ distribution ], ',', '\\', '--None--');
+  }
+  
+  addRenderEvent(function() {
+     var sel = gel('select_0${jvar_control_name_actual}'); 
+     var ul = gel('${jvar_control_name}_lock');
+     <j:if test="${jvar_start_locked}">
+       lock(ul,'${jvar_control_name}','${jvar_control_name}_edit','${jvar_control_name}_nonedit', 'select_0${jvar_control_name_actual}', '${jvar_control_name}_nonedit'); 	  
+     </j:if> 
+     <j:if test="${!jvar_start_locked}">
+        <j:if test="${!jvar_not_focused}">
+            unlock(gel('${jvar_control_name}_unlock'), '${jvar_control_name}', '${jvar_control_name}_edit', '${jvar_control_name}_nonedit');
+         </j:if>
+     </j:if>
+  });
+  </script>
+  </j:if>
+	</div>
+</j:jelly>
