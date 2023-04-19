@@ -2,8 +2,8 @@
     <head>
         <style>
             select {
-                width: 30%;
-                height: 30%;
+                width: 40%;
+                height: 40%;
                 border: 1px solid #ccc;
                 border-radius: 4px;
                 background-color: #f1f1f1;
@@ -18,13 +18,26 @@
                 font-size: 16px;
             }
 
+            #selected-pivots {
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                background-color: #f1f1f1;
+                padding: 12px 20px 12px 20px;
+                font-size: 16px;
+                cursor: pointer;
+                overflow: scroll;
+                height: 75px;
+            }
+
         </style>
     </head>
     <body>
         
             <select name="pivots" id="pivots" multiple="true">
             </select>
+            <input name="selected-pivots" id="selected-pivots" readonly="true"/>
             <button id="btn">Click</button>
+            <input class="btn btn-default" type="button" value="Clear Options" onclick="clearOptions()"></input>
             <p id="p-tag"></p>
             
     </body>
@@ -38,6 +51,19 @@
             el.value = opt;
             select.appendChild(el);
         }
+
+
+        // onchange event when a user selects an option from the select element fill the input field one option per line
+        document.getElementById("pivots").onchange = function () {
+            var selectedOptions = document.getElementById("pivots").selectedOptions;
+            var selectedValues = [];
+            for (var i = 0; i < selectedOptions.length; i++) {
+                selectedValues.push(selectedOptions[i].value);
+            }
+            document.getElementById("selected-pivots").value = selectedValues.join("\n");
+        };
+
+
         document.getElementById("btn").addEventListener("click", function () {
             var selectedOptions = document.getElementById("pivots").selectedOptions;
             var selectedValues = [];
@@ -46,5 +72,12 @@
             }
             document.getElementById("p-tag").innerHTML = selectedValues;
         });
+
+        function clearOptions() {
+            var select = document.getElementById("pivots");
+            for (var i = 0, l = select.options.length; i < l; i++) {
+                select.options[i].selected = false;
+            }
+        }
     </script>
 </html>
