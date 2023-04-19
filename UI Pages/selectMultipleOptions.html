@@ -1,0 +1,50 @@
+<html>
+    <head>
+        <style>
+            select {
+                width: 30%;
+                height: 30%;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                background-color: #f1f1f1;
+                padding: 12px 20px 12px 20px;
+                font-size: 16px;
+                cursor: pointer;
+            }
+            select:focus {
+                border: 1px solid #555;
+            }
+            option {
+                font-size: 16px;
+            }
+
+        </style>
+    </head>
+    <body>
+        
+            <select name="pivots" id="pivots" multiple="true">
+            </select>
+            <button id="btn">Click</button>
+            <p id="p-tag"></p>
+            
+    </body>
+    <script>
+        var select = document.getElementsByName("pivots")[0];
+        var options = ["option1", "option2", "option3", "option4", "option5"];
+        for (var i = 0; i < options.length; i++) {
+            var opt = options[i];
+            var el = document.createElement("option");
+            el.textContent = opt;
+            el.value = opt;
+            select.appendChild(el);
+        }
+        document.getElementById("btn").addEventListener("click", function () {
+            var selectedOptions = document.getElementById("pivots").selectedOptions;
+            var selectedValues = [];
+            for (var i = 0; i < selectedOptions.length; i++) {
+                selectedValues.push(selectedOptions[i].value);
+            }
+            document.getElementById("p-tag").innerHTML = selectedValues;
+        });
+    </script>
+</html>
