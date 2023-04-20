@@ -536,6 +536,35 @@ CGTable.prototype = {
     tableRecord.setValue("user_role", "c0cb326007e46110ab46f1d08c1ed0da");
     tableRecord.update();
 
+    // the acls will be created in global scope
+    // var operations = ["create", "read", "write", "delete", "read"];
+    // var requiredRole = [
+    //   "c0cb326007e46110ab46f1d08c1ed0da",
+    //   "493f4c7007c26110ab46f1d08c1ed025",
+    // ]; // super-user sys_id & specification-option-user sys-id
+
+    // for (i = 0; i < operations.length; i++) {
+    //   var aclGR = new GlideRecord("sys_security_acl");
+    //   aclGR.initialize();
+    //   aclGR.setValue("name", tableName);
+    //   aclGR.setValue("operation", operations[i]);
+    //   aclGR.setValue("type", "record");
+    //   aclGR.setValue("active", "true");
+    //   aclGR.setValue("description", tableLabel + " " + operations[i] + " ACL");
+    //   aclGR.insert();
+
+    //   var aclGRsysId = aclGR.getUniqueValue();
+    //   var aclRoleGr = new GlideRecord("sys_security_acl_role");
+    //   aclRoleGr.initialize();
+    //   aclRoleGr.setValue("sys_security_acl", aclGRsysId);
+    //   if (i == 4) {
+    //     aclRoleGr.setValue("sys_user_role", requiredRole[1]);
+    //   } else {
+    //     aclRoleGr.setValue("sys_user_role", requiredRole[0]);
+    //   }
+    //   aclRoleGr.insert();
+    // }
+
     gs.setCurrentApplicationId(currentAppID);
 
     gs.getSession().onlineUnimpersonate();
