@@ -521,6 +521,23 @@ CGTable.prototype = {
     }
 
     gs.setCurrentApplicationId(currentAppID);
+
+    // executing this in global scope (because write operation is restricted on the sys_db_object)
+
+    currentAppID = gs.getCurrentApplicationId();
+    gs.info("HAMZA ID 2: " + currentAppID);
+    gs.setCurrentApplicationId("global");
+
+    // adding default acls with super user role
+    var tableRecord = new GlideRecord("sys_db_object");
+    tableRecord.get(tabsys_id);
+
+    tableRecord.setValue("create_access_controls", "1");
+    tableRecord.setValue("user_role", "c0cb326007e46110ab46f1d08c1ed0da");
+    tableRecord.update();
+
+    gs.setCurrentApplicationId(currentAppID);
+
     gs.getSession().onlineUnimpersonate();
 
     // 	return JSON.stringify({});
