@@ -405,8 +405,8 @@
 // var tes = new GlideDateTime();
 // gs.info(tes.getDisplayValueInternal());
 
-var tableLabel = "Cab type (FPC344)";
-var tableLabelwoFpc = tableLabel.replace(/\(.*?\)/g, "").trim();
+// var tableLabel = "Cab type (FPC344)";
+// var tableLabelwoFpc = tableLabel.replace(/\(.*?\)/g, "").trim();
 // // check if table contains (FPC<numbeR>)
 
 // if (tableLabel.includes("(FPC")) {
@@ -415,19 +415,42 @@ var tableLabelwoFpc = tableLabel.replace(/\(.*?\)/g, "").trim();
 // }
 
 
-var same_info_mods = {
-  "Cab type (FPC42)": 190,
-  "Cab type (FPC92)": 195,
-  "Cab type (FPC889)": 200,
-};
+// var same_info_mods = {
+//   "Cab type (FPC42)": 190,
+//   "Cab type (FPC92)": 195,
+//   "Cab type (FPC889)": 200,
+// };
 
-// check if tableLabelwoFPC exists as substring in 'same_info_mods' keys
-var keysList = Object.keys(same_info_mods);
-var existCheck = false;
-for (var i=0; i < keysList.length; i++) {
-    if (keysList[i].includes(tableLabelwoFpc)) {
-        existCheck = true;
-        break;
-    }
+// // check if tableLabelwoFPC exists as substring in 'same_info_mods' keys
+// var keysList = Object.keys(same_info_mods);
+// var existCheck = false;
+// for (var i=0; i < keysList.length; i++) {
+//     if (keysList[i].includes(tableLabelwoFpc)) {
+//         existCheck = true;
+//         break;
+//     }
+// }
+// console.log(existCheck);
+
+var arr = ["Market region: Europe", " Fuel (FPC32324): electric"];
+
+// get the string before the first colon
+var str = arr[0].split(":")[0].toLowerCase().trim();
+
+// check ifthe string contains fpc<number> then get it the fpc<number> only
+if (str.includes("fpc")) {
+  var fpcNumberOnly = parseInt(str.match(/\d+/g).map(Number)[0]);
+  console.log(fpcNumberOnly);
 }
-console.log(existCheck);
+
+// if space exists in the string then replace it with underscore
+if (str.includes(" ")) {
+  str = str.replace(/\s/g, "_");
+}
+
+console.log(str);
+
+// var yearsArray = [];
+// for (var i = 1; i < 11; i++) {
+//   yearsArray.push(parseInt(capLimitGr.getDisplayValue("year_" + i)).filter(num => num !== null));
+// }
