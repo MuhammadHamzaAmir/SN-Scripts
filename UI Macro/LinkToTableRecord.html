@@ -1,0 +1,71 @@
+<style>
+    .grid-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 20px;
+    }
+
+    .field-label {
+        text-align: end;
+        padding-right: 1%;
+        padding-top: 1%;
+    }
+
+    .field-values {
+        text-align: start;
+        padding-left: 1%;
+        padding-top: 1%;
+    }
+
+    #links{
+        display: flex;
+        flex-direction: row;
+    }
+</style>
+
+<body onload="">
+    <div class="grid-container">
+        <div class="field-label">
+            <p>Volume source</p>
+        </div>
+        <div class="field-values">
+            <div id="links">
+                <p id="links-p-tag"> <a target="_blank" rel="noopener" href="https://google.com">Google</a>,
+                    <a target="_blank" rel="noopener" href="https://yahoo.com">Yahoo</a>,
+                    <a target="_blank" rel="noopener" href="https://bing.com">Bing</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+    var volSrcArray = [
+            "testing name",
+            "Testing users ss"
+        ];
+
+    var volSrcSysIds = [
+            "a0b9a0d7dbb9a010d70050f8dc9619c9",
+            "a0b9a0d7dbb9a010d70050f8dc9619c9"
+    ];
+
+    var links = document.getElementById("links-p-tag");
+    // create new a tags with target and rel attributes and href values
+    for (var i = 0; i < volSrcArray.length; i++) {
+        var a = document.createElement('a');
+        var linkText = document.createTextNode(volSrcArray[i]);
+        a.appendChild(linkText);
+        a.title = volSrcArray[i];
+        a.href = "/nav_to.do?uri=<TABLE_NAME>?sys_id=" + volSrcSysIds[i];
+        a.target = "_blank";
+        a.rel = "noopener";
+        links.appendChild(a);
+        if (i < volSrcArray.length - 1) {
+            var comma = document.createTextNode(", ");
+            links.appendChild(comma);
+        }
+    }
+
+
+</script>
