@@ -4,11 +4,16 @@
 <!-- Get the value -->
 <!-- 	
 	Based upon the control name, you can find the values;
-	var ogSpecsDisplayValueArray = document.getElementById("zfind-specs-control_nonedit").innerText.split(',');
 	var ogSpecsValueArray = document.getElementById("find-specs-control").value.split(",");
+	var ogSpecsOptions = document.querySelectorAll("#select_0find-specs-control > option");
+	
+	var ogSpecsDisplayValueArray = [];
+	for (var i=0; i<ogSpecsOptions.length; i++){
+		ogSpecsDisplayValueArray.push(ogSpecsOptions[i].innerText);
+	}
 	
 	"zfind-specs-control_nonedit" = "z<CONTROL_NAME>_nonedit"
-	"find-specs-control" = "<CONTROL_NAME>"
+	"#select_0find-specs-control" = "#select_0<CONTROL_NAME>"
 	 -->
 <?xml version="1.0" encoding="utf-8" ?>
 <j:jelly trim="true" xmlns:j="jelly:core" xmlns:g="glide" xmlns:j2="null" xmlns:g2="null">
