@@ -1,6 +1,15 @@
 <!-- Add a query -->
 <!-- Usage:  <g:macro_invoke macro="lightweight_glide_list_query" id="u_name" name="my_approvers" control_name="myListCollector" reference="sys_user_group" can_write="true" query="type=db1d65461ba1ad10df25400de54bcb84" /> -->
 
+<!-- Get the value -->
+<!-- 	
+	Based upon the control name, you can find the values;
+	var ogSpecsDisplayValueArray = document.getElementById("zfind-specs-control_nonedit").innerText.split(',');
+	var ogSpecsValueArray = document.getElementById("find-specs-control").value.split(",");
+	
+	"zfind-specs-control_nonedit" = "z<CONTROL_NAME>_nonedit"
+	"find-specs-control" = "<CONTROL_NAME>"
+	 -->
 <?xml version="1.0" encoding="utf-8" ?>
 <j:jelly trim="true" xmlns:j="jelly:core" xmlns:g="glide" xmlns:j2="null" xmlns:g2="null">
   <g:requires name="scripts/slushbucket.js"/>
