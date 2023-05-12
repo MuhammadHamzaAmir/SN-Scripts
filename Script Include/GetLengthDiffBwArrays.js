@@ -26,3 +26,8 @@ else if (arr2.length > arr1.length) {
     arr2 = arr2.slice(0, arr2.length - diff);
 }
 console.log("diff: " + diff + "\nwhichArr: " + whichArr + "\ndiffArr: " + diffArr + "\narr1: " + arr1 + "\narr2: " + arr2);
+
+// var src = "584b651f876e111060290ede8bbb3511,705ec8f787b9911060290ede8bbb357d,,67b344eb8731511060290ede8bbb352f,4067dd4087c6551060290ede8bbb358a,,904b651f876e111060290ede8bbb3504,";
+// // remove consecutive commas and trailing commas
+// src = src.replace(/,{2,}/g, ",").replace(/,$/, "");
+// console.log(src);
