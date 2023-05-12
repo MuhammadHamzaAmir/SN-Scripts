@@ -12,6 +12,8 @@ if (arr1.length > arr2.length) {
     for (var i = 0; i < diff; i++) {
         diffArr.push(arr1[arr1.length - 1 - i]);
     }
+    // cut off the extra elements from the longer array
+    arr1 = arr1.slice(0, arr1.length - diff);
 }
 
 else if (arr2.length > arr1.length) {
@@ -20,5 +22,7 @@ else if (arr2.length > arr1.length) {
     for (var i = 0; i < diff; i++) {
         diffArr.push(arr2[arr2.length - 1 - i]);
     }
+    // cut off the extra elements from the longer array
+    arr2 = arr2.slice(0, arr2.length - diff);
 }
-console.log("diff: " + diff + "\nwhichArr: " + whichArr + "\ndiffArr: " + diffArr);
+console.log("diff: " + diff + "\nwhichArr: " + whichArr + "\ndiffArr: " + diffArr + "\narr1: " + arr1 + "\narr2: " + arr2);
