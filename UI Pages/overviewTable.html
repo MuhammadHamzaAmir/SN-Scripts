@@ -1,0 +1,375 @@
+<style>
+    body {
+        font-family: "Roboto", sans-serif;
+        line-height: 1.6;
+        color: #333;
+        background-color: #f5f5f5;
+    }
+
+    .container {
+        margin: 0 auto;
+        padding-left: 3%;
+        padding-top: 3%;
+        padding-right: 3%;
+        padding-bottom: 3%;
+
+        background-color: #fff;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    }
+
+    label {
+        font-weight: bold;
+    }
+
+    #table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+    }
+
+    #table td,
+    th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 9px;
+        
+    }
+
+    #table th {
+        background-color: #dddddd;
+    }
+
+    #table tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+</style>
+
+<body>
+    <div class="container" id="container-id" style="display:none">
+        <p style="display: none;" id="loading">Loading...</p>
+        <table id="table" style="display:none">
+            <thead>
+                <tr>
+                    <th>Index</th>
+                    <th>Conversions</th>
+                    <th>Target Specifications</th>
+                    <th>Year-1</th>
+                    <th>Year-2</th>
+                    <th>Year-3</th>
+                    <th>Year-4</th>
+                    <th>Year-5</th>
+                    <th>Year-6</th>
+                    <th>Year-7</th>
+                    <th>Year-8</th>
+                    <th>Year-9</th>
+                    <th>Year-10</th>
+                </tr>
+            </thead>
+            <tbody id="table-body">
+
+            </tbody>
+        </table>
+    </div>
+</body>
+
+<script lang="javascript">
+
+
+    // script include client callable (Build the object with data to be used in the table)
+    // var gr = new GlideRecord('<TABLE>');
+    //     gr.get('656e484687ba6d5060290ede8bbb35ae');
+
+    //     var result = {};
+    //     result["conversion_set"] = gr.getValue('name');
+
+    //     var convsGr = new GlideRecord('<TABLE>');
+    //     convsGr.addEncodedQuery('conversion_set=656e484687ba6d5060290ede8bbb35ae');
+    //     convsGr.orderBy("index");
+    //     convsGr.query();
+
+    //     var conversions = [];
+
+    //     while (convsGr.next()) {
+
+    //         var convObj = {};
+    //         var index = convsGr.getValue("index");
+    //         var srcSpecs = convsGr.getDisplayValue("<FIELD>");
+
+    //         convObj["index"] = index;
+    //         convObj["srcSpecs"] = srcSpecs;
+
+    //         var targetSpecsGr = new GlideRecord('<TABLE>');
+    //         targetSpecsGr.addEncodedQuery('conversion=' + convsGr.getUniqueValue());
+    //         targetSpecsGr.orderBy("index");
+    //         targetSpecsGr.query();
+
+    //         while (targetSpecsGr.next()) {
+    //             var tarObj = {}
+    //             tarObj["targs_specs"] = targetSpecsGr.getDisplayValue("FIELD");
+    //             var years = [];
+    //             for (var i = 1; i < 11; i++) {
+    //                 years.push(targetSpecsGr.getValue("year_" + i));
+    //             }
+    //             tarObj["years"] = years;
+
+    //             convObj[targetSpecsGr.getValue('index')] = tarObj
+    //         }
+
+    //         conversions.push(convObj);
+    //     }
+    //     result["conversions"] = conversions;
+    //     result;
+
+
+    // demo data
+    var result = {
+        "conversion_set": "Test",
+        "conversions": [
+            {
+                "index": "48",
+                "srcSpecs": "Item 1, Item 2, Item 3, Item 4, Item 5",
+                "tar_specs": []
+            },
+            {
+                "index": "49",
+                "srcSpecs": "Item 1, Item 2, Item 3, Item 4, Item 5",
+                "tar_specs": [
+                    {
+                        "targs_specs": "Diff 1, DIff2, Diff 3, Diff 4, Diff 5",
+                        "years": [
+                            "13",
+                            "55",
+                            "56",
+                            null,
+                            null,
+                            null,
+                            null,
+                            null,
+                            null,
+                            null
+                        ]
+                    },
+                    {
+                        "targs_specs": "Diff 1, DIff2, Diff 3, Diff 4, Diff 5",
+                        "years": [
+                            "23",
+                            "8",
+                            null,
+                            null,
+                            "12",
+                            null,
+                            null,
+                            null,
+                            null,
+                            null
+                        ]
+                    },
+                    {
+                        "targs_specs": "Diff 1, DIff2, Diff 3, Diff 4, Diff 5",
+                        "years": [
+                            "34",
+                            "1",
+                            null,
+                            null,
+                            null,
+                            null,
+                            null,
+                            null,
+                            null,
+                            null
+                        ]
+                    }
+                ]
+            },
+            {
+                "index": "50",
+                "srcSpecs": "Item 1, Item 2, Item 3, Item 4, Item 5",
+                "tar_specs": [
+                    {
+                        "targs_specs": "Diff 1, DIff2, Diff 3, Diff 4, Diff 5",
+                        "years": [
+                            "6",
+                            "6",
+                            "6",
+                            "6",
+                            null,
+                            null,
+                            null,
+                            null,
+                            null,
+                            null
+                        ]
+                    },
+                    {
+                        "targs_specs": "Diff 1, DIff2, Diff 3, Diff 4, Diff 5",
+                        "years": [
+                            "2",
+                            "11",
+                            "23",
+                            "9",
+                            null,
+                            null,
+                            null,
+                            null,
+                            null,
+                            null
+                        ]
+                    }
+                ]
+            },
+            {
+                "index": "51",
+                "srcSpecs": "Item 1, Item 2, Item 3, Item 4, Item 5",
+                "tar_specs": []
+            },
+            {
+                "index": "52",
+                "srcSpecs": "Item 1, Item 2, Item 3, Item 4, Item 5",
+                "tar_specs": []
+            },
+            {
+                "index": "53",
+                "srcSpecs": "Item 1, Item 2, Item 3, Item 4, Item 5",
+                "tar_specs": []
+            },
+            {
+                "index": "54",
+                "srcSpecs": "Item 1, Item 2, Item 3, Item 4, Item 5",
+                "tar_specs": []
+            },
+            {
+                "index": "55",
+                "srcSpecs": "Item 1, Item 2, Item 3, Item 4, Item 5",
+                "tar_specs": [
+                    {
+                        "targs_specs": "",
+                        "years": [
+                            "1",
+                            "1",
+                            "1",
+                            "1",
+                            "1",
+                            "1",
+                            "1",
+                            "1",
+                            "1",
+                            "1"
+                        ]
+                    }
+                ]
+            },
+            {
+                "index": "56",
+                "srcSpecs": "Item 1, Item 2, Item 3, Item 4, Item 5",
+                "tar_specs": []
+            },
+            {
+                "index": "57",
+                "srcSpecs": "Item 1, Item 2, Item 3, Item 4, Item 5",
+                "tar_specs": []
+            },
+            {
+                "index": "58",
+                "srcSpecs": "Item 1, Item 2, Item 3, Item 4, Item 5",
+                "tar_specs": []
+            },
+            {
+                "index": "59",
+                "srcSpecs": "Item 1, Item 2, Item 3, Item 4, Item 5",
+                "tar_specs": [
+                    {
+                        "targs_specs": "Diff 1, DIff2, Diff 3, Diff 4, Diff 5",
+                        "years": [
+                            "2",
+                            null,
+                            null,
+                            null,
+                            null,
+                            null,
+                            null,
+                            null,
+                            null,
+                            null
+                        ]
+                    }
+                ]
+            },
+            {
+                "index": "60",
+                "srcSpecs": "Item 1, Item 2, Item 3, Item 4, Item 5",
+                "tar_specs": []
+            }
+        ]
+    };
+
+    document.getElementById("container-id").style.display = "block";
+    document.getElementById("table").style.display = "block";
+                                      
+
+        // Get the table element
+        var table = document.getElementById("table");
+        var tableBody = document.getElementById("table-body");
+
+        var spanElem = "<span style='font-weight: bold; color: #0a0a0a;'>Conversion Set: </span>";
+
+        document.getElementById("loading").innerHTML = spanElem + result["conversion_set"];
+
+        // add a row for each conversion
+        for (var i = 0; i < result["conversions"].length; i++) {
+
+
+            var conversion = result["conversions"][i];
+
+            var row = "<tr>" +
+                "<td>" + conversion["index"] + "</td>" +
+                "<td>" + conversion["srcSpecs"] + "</td>";
+
+            // add a row for each target specification 
+            
+            if(conversion["tar_specs"].length < 1){
+                row += "</td><td></td> <td></td><td></td><td></td><td></td> <td></td> <td></td> <td></td> <td></td>  <td></td> <td></td>";
+                row += "</tr>";
+                tableBody.innerHTML += row;
+            }
+
+            for (var j = 0; j < conversion["tar_specs"].length; j++) {
+                if (j > 0) {
+                    row = "<tr>" +
+                        "<td></td>" +
+                        "<td></td>";
+                }
+                var target_spec = conversion["tar_specs"][j];
+                // add the target specifications
+                row += "<td>" + target_spec["targs_specs"] + "</td>";
+
+
+                // add a row for each year
+                for (var k = 0; k < target_spec["years"].length; k++) {
+                    var year = target_spec["years"][k];
+                    
+                    if (year == null) {
+                        year = 0;
+                    }
+                    
+
+                    // add the year
+                    row += "<td>" + year + "</td>";
+
+                }
+                row += "</tr>";
+                tableBody.innerHTML += row;
+
+            }
+
+
+
+
+        }
+
+
+
+
+
+
+
+
+</script>
