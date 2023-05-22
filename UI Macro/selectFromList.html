@@ -1,0 +1,60 @@
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script>
+            $(document).ready(function(){
+                $("#selectFromList").change(function(){
+                    var selectedValue = $(this).val();
+                    var selectedText = $(this).find("option:selected").text();
+                    $("#selectedValue").text(selectedValue);
+                    $("#selectedText").text(selectedText);
+                });
+            });
+        </script>
+
+        <style>
+            #selectFromList{
+                width: 150px;
+                height: 28px;
+                font-size: 18px;
+                text-align: center;
+                border-radius: 5px;
+            }
+            /* hover and click */
+            #selectFromList:hover{
+                background-color: #f1f1f1;
+            }
+            #selectFromList:active{
+                background-color: #ddd;
+            }
+            .selectFromList{
+                width: 150px;
+                height: 28px;
+                font-size: 18px;
+                text-align: center;
+                border-radius: 5px;
+            }
+
+        </style>
+
+    </head>
+    <body>
+        <label for="selectFromList" style="font-size: 17px;">Apply to:</label>
+        <select id="selectFromList">
+            <option value="1">One</option>
+            <option value="2">Two</option>
+        </select>
+        <br/>
+        <br/>
+        <div>Selected Value: <span id="selectedValue"></span></div>
+        <div>Selected Text: <span id="selectedText"></span></div>
+    </body>
+
+    <script>
+        // add a class to the select element]
+        var selectFromList = document.getElementById("selectFromList");
+        selectFromList.classList.add("selectFromList");
+        
+    </script>
+
+</html>
