@@ -18,5 +18,9 @@ var tableName = "x_testing_ts_fpc2986";
 var axleCalFlag = false;
 var axleVol = "";
 for (key in volumeMultiplierMap) {
-  console.log("key: " + key + " value: " + volumeMultiplierMap[key]);
+    if (tableName.includes(key)) {
+        axleCalFlag = true;
+    }
+    console.log("key: " + key + " value: " + volumeMultiplierMap[key]);
 }
+console.log("axleCalFlag: " + axleCalFlag);
