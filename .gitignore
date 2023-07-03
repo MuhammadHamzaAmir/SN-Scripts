@@ -1,2 +1,3 @@
 /node_modules
 /script_includes_private
+/.env

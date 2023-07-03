@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/MuhammadHamzaAmir/SN-Scripts#readme",
   "dependencies": {
+    "axios": "^1.4.0",
+    "dotenv": "^16.3.1",
     "node-fetch": "^3.3.0",
     "xhr2": "^0.2.1",
     "xlsx": "^0.18.5"
