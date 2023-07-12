@@ -1,3 +1,5 @@
 /node_modules
 /script_includes_private
 /.env
+/Files/progData.xlsx
+/Files/historicData.xlsx
