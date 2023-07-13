@@ -149,5 +149,3 @@ dotenv.config({ path: "../.env" });
 
   await getProgDataAtch();
 })();
-
-
