@@ -95,3 +95,50 @@ function onConditionFalse() {
   g_form.addOption("category", "23", "Client ", "23"); // Client 
   g_form.addOption("category", "34", "Client Cloud ", "24"); // Client Cloud 
 }
+
+
+// More dynamic way to do this
+// Using a Script Include to get the values from the table
+function onConditionTrue() {
+	
+	
+	var ga = new GlideAjax("sn_customerservice.ManageFieldChoices");
+	ga.addParam('sysparm_name', 'removeChoices');
+	ga.addParam("field_name","category");
+	ga.addParam("table_name","sn_customerservice_case");
+	ga.addParam("choices_values","500,400,300");  // values from the choice table for these choices of category
+	ga.getXMLAnswer(callbackFunction);
+	
+	function callbackFunction(response) {
+		var answer = JSON.parse(response);
+	
+		
+		for (var i=0;i<answer.length;i++){
+			g_form.removeOption("category", answer[i]);
+			
+		}
+		
+	}
+}
+
+function onCondition() {
+  var choicesToKeepStr = "500,400,300"; // values from the choice table for these choices of category
+  var choicesToKeepArray = choicesToKeepStr.split(",");
+
+  var sequence = choicesToKeepArray.length + 1;
+
+  var ga = new GlideAjax("sn_customerservice.ManageFieldChoices");
+  ga.addParam("sysparm_name", "addChoices");
+  ga.addParam("field_name", "category");
+  ga.addParam("table_name", "sn_customerservice_case");
+  ga.addParam("choices_values", choicesToKeepStr);
+  ga.getXMLAnswer(callbackFunction);
+
+  function callbackFunction(response) {
+    var answer = JSON.parse(response);
+
+    for (var i = 0; i < answer.length; i++) {
+      g_form.addOption("category", answer[i][0], answer[i][1], sequence + i);
+    }
+  }
+}
