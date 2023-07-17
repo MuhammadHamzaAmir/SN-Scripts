@@ -1,0 +1,167 @@
+<style>
+
+    body {
+        background-color: #f1f1f1;
+    }
+
+    input[type=text],
+    select,
+    textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        resize: vertical;
+    }
+
+    label {
+        padding: 12px 12px 12px 0;
+        display: inline-block;
+    }
+
+    .container {
+        border-radius: 5px;
+        background-color: #ffffff;
+        padding: 20px;
+    }
+
+    .col-25 {
+        float: left;
+        width: 25%;
+        margin-top: 6px;
+    }
+
+    .col-75 {
+        float: left;
+        width: 75%;
+        margin-top: 6px;
+    }
+
+    .row:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+
+    @media screen and (max-width: 600px) {
+
+        .col-25,
+        .col-75,
+        input[type=submit] {
+            width: 100%;
+            margin-top: 0;
+        }
+    }
+
+</style>
+
+<body onload="loadData()">
+    <label>Name</label>
+    <input type="text" name="name" id="name" placeholder="Enter your name" required>
+
+    <br />
+    <label>What is your query type?</label>
+    <!-- use radio buttons  -->
+    <input onchange="handleData()" type="radio" name="queryType" id="queryTypeIssue" value="issue">
+    <label for="issue">Issue</label>
+    <input onchange="handleData()" type="radio" name="queryType" id="queryTypeQuestion" value="question" required>
+    <label for="question">Question</label>
+    <input onchange="handleData()" type="radio" name="queryType" id="queryTypeSuggestion" value="suggestion" required>
+    <label for="suggestion">Suggestion</label>
+    <br />
+
+
+    <label style="display:none;" id="answer-label"></label>
+    <br />
+    <textarea style="display:none;" name="issue" id="answer-textarea" required></textarea>
+    <br />
+
+
+    <button name="submit" id="submit" style="margin-left: 5px;" class="btn btn-primary" onclick="submitData()">Submit</button>
+    <button name="cancel" id="cancel" style="margin-left: 5px;"class="btn btn-default" onclick="cancelTransaction()">Cancel</button>
+    <p id="p-result"></p>
+
+
+
+    <script lang="javascript">
+
+        function loadData() {
+            // hide all the textareas with thier labels
+            document.getElementById("answer-label").style.display = "none";
+            document.getElementById("answer-textarea").style.display = "none";
+
+        }
+
+        function handleData() {
+            if (document.getElementById("queryTypeQuestion").checked) {
+                document.getElementById("answer-label").innerHTML = "Kindly ask your question?";
+                document.getElementById("answer-textarea").placeholder = "Enter your question";
+                document.getElementById("answer-label").style.display = "block";
+                document.getElementById("answer-textarea").style.display = "block";
+            }
+
+            if (document.getElementById("queryTypeIssue").checked) {
+
+                document.getElementById("answer-label").innerHTML = "Kindly provide details regarding your issue?";
+                document.getElementById("answer-textarea").placeholder = "Enter your issue";
+                document.getElementById("answer-label").style.display = "block";
+                document.getElementById("answer-textarea").style.display = "block";
+
+
+            }
+            if (document.getElementById("queryTypeSuggestion").checked) {
+
+                document.getElementById("answer-label").innerHTML = "Kindly provide your suggestion?";
+                document.getElementById("answer-textarea").placeholder = "Enter your suggestion";
+                document.getElementById("answer-label").style.display = "block";
+                document.getElementById("answer-textarea").style.display = "block";
+
+            }
+        }
+
+        function submitData() {
+
+            // if required fields are not empty then display success message
+
+            if (document.getElementById("name").value.trim() == "") {
+                return;
+            }
+            if (document.getElementById("queryTypeQuestion").checked) {
+                if (document.getElementById("answer-textarea").value.trim() == "") {
+                    return;
+                }
+            }
+            if (document.getElementById("queryTypeIssue").checked) {
+                if (document.getElementById("answer-textarea").value.trim() == "") {
+                    return;
+                }
+            }
+            if (document.getElementById("queryTypeSuggestion").checked) {
+                if (document.getElementById("answer-textarea").value.trim() == "") {
+                    return;
+                }
+            }
+            if (document.getElementById("queryTypeQuestion").checked == false && document.getElementById("queryTypeIssue").checked == false && document.getElementById("queryTypeSuggestion").checked == false) {
+                return;
+            }
+            else {
+                document.getElementById("p-result").innerHTML = "Your query has been submitted successfully";
+
+                setTimeout(function () {
+                    document.getElementById("p-result").innerHTML = "";
+                }, 5000);
+            }
+        }
+
+        function cancelTransaction() {
+
+        }
+
+
+
+
+
+
+    </script>
+
+</body>
