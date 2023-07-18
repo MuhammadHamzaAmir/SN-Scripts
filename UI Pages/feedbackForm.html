@@ -100,7 +100,7 @@
                 document.getElementById("answer-textarea").style.display = "block";
             }
 
-            if (document.getElementById("queryTypeIssue").checked) {
+            else if (document.getElementById("queryTypeIssue").checked) {
 
                 document.getElementById("answer-label").innerHTML = "Kindly provide details regarding your issue?";
                 document.getElementById("answer-textarea").placeholder = "Enter your issue";
@@ -109,7 +109,7 @@
 
 
             }
-            if (document.getElementById("queryTypeSuggestion").checked) {
+            else if (document.getElementById("queryTypeSuggestion").checked) {
 
                 document.getElementById("answer-label").innerHTML = "Kindly provide your suggestion?";
                 document.getElementById("answer-textarea").placeholder = "Enter your suggestion";
