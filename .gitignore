@@ -3,3 +3,6 @@
 /.env
 /Files/progData.xlsx
 /Files/historicData.xlsx
+/Files/historicDataSC.xlsx
+/Files/progDataSC.xlsx
+
