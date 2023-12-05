@@ -1,4 +1,4 @@
-// condition code
+// schedule job condition code
 var result = true;
 var gdt = new GlideDateTime();
 
@@ -19,9 +19,23 @@ if (day == 6 || day == 7) {
   schedule.orderByDesc("next_action");
   schedule.query();
   if (schedule.next()) {
-    schedule.setValue("next_action", gdt.getValue());
-    schedule.update();
+    // we pass the event name, glide record, and a value of our choice in the parameters
+    gs.eventQueue("schedule_weekend_execution", schedule, gdt.getValue());
   }
   result = false;
 }
 result;
+
+// Event: schedule_weekend_execution
+
+// Script Action Code:
+// Schedule the job for the next weekday
+var schedule = new GlideRecord("sys_trigger");
+schedule.addEncodedQuery("name=Test script schedule");
+schedule.orderByDesc('next_action');
+schedule.query();
+if (schedule.next()) {
+    schedule.setValue('next_action', event.parm1);
+    schedule.update();
+}
+
