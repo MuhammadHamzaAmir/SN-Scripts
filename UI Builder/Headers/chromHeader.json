@@ -1,0 +1,47 @@
+{
+    "privatePage": {
+        "searchEnabled": false,
+        "userPrefsEnabled": false,
+        "currentScreenLinkConfiguration": {
+            "roles": [
+                "admin"
+            ],
+            "position": 250
+        },
+        "globalTools": {
+            "collapsingMenuId": 0,
+            "primaryItems": [],
+            "secondaryItems": []
+        }
+    },
+    "publicPage": {
+        "menuEnabled": false,
+        "logoRoute": {
+            "type": "route",
+            "value": {
+                "route": "landing",
+                "fields": {}
+            }
+        },
+        "searchEnabled": false
+    }
+}
+
+{
+    "privatePage": {
+        "userPrefsEnabled": false,
+        "searchEnabled": false,
+        "currentScreenLinkConfiguration": {},
+        "globalTools": {
+            "collapsingMenuId": 0,
+            "primaryItems": [],
+            "secondaryItems": []
+        }
+    },
+    "publicPage": {
+        "menuEnabled": false,
+        "searchEnabled": false,
+        "logoRoute": {},
+        "actionButtons": []
+    }
+}

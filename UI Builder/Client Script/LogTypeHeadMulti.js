@@ -6,6 +6,8 @@
  * @param {ApiHelpers} params.helpers
  */
 function handler({ api, event, helpers, imports }) {
+  api.setState("subscribe", true);
+
   // console.log("VAlue"+JSON.stringify(api.state.programs));
   var programsIds = api.state.programs.map((e) => e.id);
   console.log(programsIds);
