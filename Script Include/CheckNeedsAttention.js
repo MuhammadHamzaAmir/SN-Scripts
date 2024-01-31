@@ -7,6 +7,10 @@ function onSubmit() {
     user.addParam("sysparm_name", "setNeedsAttention");
     user.addParam("sysparm_sys_id", g_form.getValue("u_conversion_set"));
     user.getXML(callbackFunction);
+    // using
+    // gx.getXMLAnswer(callbackFunction);
+    // just use in callback function
+    // var answer = response
   }
 
   function callbackFunction(response) {
