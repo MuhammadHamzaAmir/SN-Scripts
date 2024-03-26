@@ -1,5 +1,5 @@
 <!-- Add a query -->
-<!-- Usage:  <g:macro_invoke macro="lightweight_glide_list_query" id="u_name" name="my_approvers" control_name="myListCollector" reference="sys_user_group" can_write="true" query="type=db1d65461ba1ad10df25400de54bcb84" /> -->
+<!-- Usage:  <g:macro_invoke macro="lightweight_glide_list_query" id="find-specs-control" name="my_approvers" control_name="find-specs-control" reference="sys_user_group" can_write="true" query="type=db1d65461ba1ad10df25400de54bcb84" /> -->
 
 <!-- Get the value -->
 <!-- 	
@@ -15,10 +15,10 @@
 	"zfind-specs-control_nonedit" = "z<CONTROL_NAME>_nonedit"
 	"#select_0find-specs-control" = "#select_0<CONTROL_NAME>"
 	 -->
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <j:jelly trim="true" xmlns:j="jelly:core" xmlns:g="glide" xmlns:j2="null" xmlns:g2="null">
   <g:requires name="scripts/slushbucket.js"/>
-  <!--
+	<!--
 	  Simplified glide list implemenation for use within macros. Runs entirely in a single phase. 
 	  Doesn't support clickthrough or m2m edit.
 	  
@@ -44,7 +44,7 @@
 		<TABLE cellSpacing="1" cellPadding="1" border="0">
 		<TR class="featureListRoleGroup">
 			<TD>
-				<!-- left selection -->
+							<!-- left selection -->
 				<SELECT id="select_0${jvar_control_name_actual}" style="margin:2px; WIDTH: 160px" multiple="yes" 
 					size="4" name="select_0${jvar_control_name_actual}" aria-label="${jvar_label}, role list">
 					<g:get_distribution_list ref="${jvar_reference}" 
@@ -52,7 +52,7 @@
 				</SELECT>
 			</TD>
 			<TD class="bodySmall" vAlign="center">
-				<!-- add / remove buttons -->
+							<!-- add / remove buttons -->
 				<TABLE cellSpacing="0" cellPadding="0" border="0">
 					<j:if test="${jvar_reference == 'sys_user'}" >
 					    <TR>
