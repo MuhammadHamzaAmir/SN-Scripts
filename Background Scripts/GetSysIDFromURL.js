@@ -39,6 +39,6 @@ if (startIndex !== -1) {
 
 
 
-//3rd way
+//3rd way - (Its the preferred way)
 var url = gs.action.getGlideURI().getMap();
 var sysId = url.get("sys_id");
