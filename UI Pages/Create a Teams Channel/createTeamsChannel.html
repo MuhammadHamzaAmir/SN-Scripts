@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide" xmlns:j2="null" xmlns:g2="null">
+
+
+    <html>
+
+    <head>
+        <meta charset="UTF-8">
+        </meta>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        </meta>
+        <title>Create an MS Teams Channel</title>
+
+        <style>
+            .body-class-ms-teams-ui-action {
+                font-family: Arial, sans-serif;
+                background-color: #f4f4f4;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+            }
+
+            .container-ui-action-ms-teams {
+                background-color: #fff;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+                width: 98%;
+            }
+
+            #h1-title {
+                font-size: 18px;
+                margin-bottom: 15px;
+            }
+
+            #label-tag {
+                display: block;
+                margin-bottom: 5px;
+            }
+
+            .p-class--ms {
+                display: block;
+                margin-bottom: 5px;
+            }
+
+            .button-class-ms {
+                margin-bottom: 10px;
+            }
+
+            .input-tag-ms {
+                width: 100%;
+                padding: 8px;
+                margin-bottom: 10px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+            }
+
+            #select-tag {
+                width: 100%;
+                padding: 8px;
+                margin-bottom: 10px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+            }
+
+            .button-container-ms-teams-ui-action {
+                display: flex;
+                justify-content: flex-end;
+                gap: 10px;
+            }
+
+            button:hover {
+                background-color: #005fa3;
+            }
+
+            .hidden {
+                display: none;
+            }
+
+            .loading-text {
+                font-weight: bold;
+            }
+
+            .start-label-asterik-ms:after {
+                content: "*";
+                color: "red";
+            }
+        </style>
+
+    </head>
+
+    <body class="body-class-ms-teams-ui-action">
+        <div class="container-ui-action-ms-teams">
+
+            <p class="p-class--ms">If you have any issues, please click here</p>
+            <button class="btn btn-primary button-class-ms" id="refreshMSTeamsToken" onclick="refreshMSTeams()">Refresh
+                MS Teams</button>
+            <label id="label-tag" for="select-tag">Select Team:</label>
+            <select id="select-tag" name="select-tag">
+                <option value="">Select a team...</option>
+            </select>
+
+            <div id="channelInputs" class="hidden">
+                <label class="start-label-asterik-ms" id="label-tag" for="channelTitle">Channel Title:</label>
+                <input class="input-tag-ms" type="text" id="channelTitle" placeholder="Enter channel title"></input>
+                <label class="start-label-asterik-ms" id="label-tag" for="channelDescription">Channel
+                    Description:</label>
+                <input class="input-tag-ms" type="text" id="channelDescription"
+                    placeholder="Enter channel description"></input>
+
+                <div class="button-container-ms-teams-ui-action">
+                    <button class="btn btn-primary" id="createChannelBtn">Create Channel</button>
+                    <button class="btn btn-default" id="cancelBtn">Cancel</button>
+                </div>
+            </div>
+
+            <div id="postMessageSection" class="hidden">
+                <input type="checkbox" id="postMessageCheckbox"></input>
+                <label id="label-tag" for="postMessageCheckbox">Post a Message to Channel</label>
+
+                <div id="messageInputs" class="hidden">
+                    <label class="start-label-asterik-ms" id="label-tag" for="messageTitle">Message Title:</label>
+                    <input class="input-tag-ms" type="text" id="messageTitle" placeholder="Enter message title"></input>
+                    <label class="start-label-asterik-ms" id="label-tag" for="message">Message:</label>
+                    <input class="input-tag-ms" type="text" id="message" placeholder="Enter your message"></input>
+
+                    <div class="button-container-ms-teams-ui-action">
+                        <span id="loading-post-msg" class="loading-text hidden">Loading...</span>
+                        <button class="btn btn-primary" id="postMessageBtn">Post Message</button>
+                        <button class="btn btn-default" id="cancelMessageBtn">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </body>
+
+    </html>
+
+
+</j:jelly>
+
+
