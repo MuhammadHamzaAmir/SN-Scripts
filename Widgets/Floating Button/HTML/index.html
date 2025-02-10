@@ -1,0 +1,53 @@
+<!-- Feedback Button -->
+<div class="feedback-button" ng-click="openFeedbackForm()">Feedback</div>
+
+<!-- Feedback Form -->
+<div ng-show="showFeedbackForm" class="feedback-form">
+    <div class="form-group">
+        <label>Type</label>
+        <div>
+            <input type="radio" ng-model="feedbackData.type" value="Issue"> Issue
+            <input type="radio" ng-model="feedbackData.type" value="Question"> Question
+            <input type="radio" ng-model="feedbackData.type" value="Suggestion"> Suggestion
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Description</label>
+        <textarea ng-model="feedbackData.description" class="form-control"></textarea>
+    </div>
+
+    <!-- Attachment Section -->
+    <div class="form-group">
+        <label>
+            <input type="checkbox" ng-model="feedbackData.includeAttachment"> Include Attachment
+        </label>
+    </div>
+    <div ng-show="showAttachmentField" class="form-group">
+        <label>Attachment</label>
+        <input type="file" class="form-control" onchange="angular.element(this).scope().uploadAttachment(this.files)">
+    </div>
+
+    <!-- Snapshot Section -->
+    <div class="form-group">
+        <label>
+            <input type="checkbox" ng-model="feedbackData.includeSnapshot"> Include Snapshot
+        </label>
+    </div>
+    <div ng-show="showSnapshotField" class="form-group">
+        <label>Capture Snapshot</label>
+        <button class="btn btn-secondary" ng-click="startSnapshotSelection()">Select Area</button>
+
+        <!-- Selection Overlay -->
+        <div class="selection-overlay" ng-show="isSelecting"></div>
+
+        <!-- Snapshot Preview -->
+        <canvas id="snapshotCanvas" class="snapshot-preview"></canvas>
+    </div>
+
+    <button class="btn btn-primary" ng-click="submitFeedback()">Submit</button>
+    <button class="btn btn-secondary" ng-click="closeFeedbackForm()">Cancel</button>
+</div>
+
+<!-- Load html2canvas Library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
