@@ -28,9 +28,7 @@
   }
 
   var ritmGr = new GlideRecord("sc_req_item");
-  ritmGr
-    .addQuery("number", data["u_ritm_number"])
-    .addOrCondition("u_order_number", data["u_order_number"]);
+  ritmGr.addQuery("number", data["u_ritm_number"]).addOrCondition("u_order_number", data["u_order_number"]);
   ritmGr.query();
 
   while (ritmGr.next()) {
@@ -128,8 +126,7 @@
       statusBody["status_result"] = statusResult;
       statusBody["task_number"] = taskGr.getValue("number");
       statusBody["task_state"] = taskGr.getDisplayValue("state");
-      statusBody["task_short_description"] =
-        taskGr.getValue("short_description");
+      statusBody["task_short_description"] = taskGr.getValue("short_description");
       response.setStatus(statusCode);
       response.setBody(statusBody);
     } else if (
@@ -194,8 +191,7 @@
       statusBody["status_result"] = statusResult;
       statusBody["task_number"] = taskGr.getValue("number");
       statusBody["task_state"] = taskGr.getDisplayValue("state");
-      statusBody["task_short_description"] =
-        taskGr.getValue("short_description");
+      statusBody["task_short_description"] = taskGr.getValue("short_description");
       response.setStatus(statusCode);
       response.setBody(statusBody);
     } else {
@@ -205,8 +201,7 @@
       statusBody["status_result"] = statusResult;
       statusBody["task_number"] = taskGr.getValue("number");
       statusBody["task_state"] = taskGr.getDisplayValue("state");
-      statusBody["task_short_description"] =
-        taskGr.getValue("short_description");
+      statusBody["task_short_description"] = taskGr.getValue("short_description");
       response.setStatus(statusCode);
       response.setBody(statusBody);
     }
