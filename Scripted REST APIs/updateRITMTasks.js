@@ -125,6 +125,7 @@
                 "\n" +
                 "Shipping Quantity: " +
                 data["u_shipping_quantity"];
+			taskGr.setValue("state","3"); // Closed Complete
             taskGr.update();
             statusCode = 201;
             statusMsg = "Config Task is updated";
@@ -201,6 +202,7 @@
                 "\n" +
                 "Shipping Quantity: " +
                 data["u_shipping_quantity"];
+			taskGr.setValue("state","3"); //Closed Complete
             taskGr.update();
             statusCode = 201;
             statusMsg = statusMsg + "," + "Deploy Task is updated";
@@ -296,7 +298,7 @@
                 "\n" +
                 "Shipping Quantity: " +
                 data["u_shipping_quantity"];
-			taskGr.setValue("state","9");
+			taskGr.setValue("state","9"); //Awaiting User Info
             taskGr.update();
             statusCode = 201;
             statusMsg = "Retrieve Task is updated";
