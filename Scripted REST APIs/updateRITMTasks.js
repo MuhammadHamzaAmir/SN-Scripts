@@ -7,6 +7,7 @@
         "u_order_number",
         "u_hardware_model",
         "u_serial_number",
+        "u_model_category"
     ];
 
     var missingFields = [];
@@ -62,6 +63,9 @@
 
         var configTaskExists = false;
         var deployTaskExists = false;
+        var substitute = isHardwareSubstitutedAllowed(data["u_model_category"]);
+
+
         //update config task - they are optional
         var taskGr = new GlideRecord("sc_task");
         taskGr.addEncodedQuery(
@@ -127,11 +131,12 @@
                 data["u_shipping_quantity"];
             taskGr.update();
 
-
-            var subResult = substituteHardware(taskGr.sys_id);
-            if (subResult) {
-                taskGr.setValue("state", "3"); // Closed Complete
-                taskGr.update();
+            if (substitute) {
+                var subResult = substituteHardware(taskGr.sys_id);
+                if (subResult) {
+                    taskGr.setValue("state", "3"); // Closed Complete
+                    taskGr.update();
+                }
             }
 
             statusCode = 201;
@@ -212,10 +217,12 @@
             taskGr.update();
 
             if (!(configTaskExists)) {
-                var subResult = substituteHardware(taskGr.sys_id);
-                if (subResult) {
-                    taskGr.setValue("state", "3"); // Closed Complete
-                    taskGr.update();
+                if (substitute) {
+                    var subResult = substituteHardware(taskGr.sys_id);
+                    if (subResult) {
+                        taskGr.setValue("state", "3"); // Closed Complete
+                        taskGr.update();
+                    }
                 }
 
             }
@@ -376,4 +383,11 @@ function hardwareSubstitute(scTaskSysID) {
 
 
 
+}
+
+function isHardwareSubstitutedAllowed(modelCategory) {
+    modelCategory = modelCategory.toLowerCase();
+    // allow singular and plural bothes
+    var allowedCategories = ["laptops", "monitors", "printers", "laptop", "monitor", "printer"];
+    return allowedCategories.includes(modelCategory);
 }
