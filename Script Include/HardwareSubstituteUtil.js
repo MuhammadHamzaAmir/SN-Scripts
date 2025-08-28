@@ -2,35 +2,35 @@ var HardwareSubstituteUtil = Class.create();
 HardwareSubstituteUtil.prototype = {
   initialize: function () {},
 
-  substituteHardware: function (scTaskSysID, ritmSysID, assetSysID, modelSysID) {
-        var mod = model;
-        var ast = asset;
+  substituteHardware: function (scTaskSysID, newAssetSysID, newModelSysID) {
+
+        var scTaskGr = new GlideRecord("sc_task");
+        scTaskGr.get(scTaskSysID);
+
+        var oldAsset = scTaskGr.u_asset;
+        var oldModel = scTaskGr.u_asset_model;
         
+        scTaskGr.u_asset_model = newModelSysID;
+        scTaskGr.u_asset = newAssetSysID;
 
-        var gr = new GlideRecord("sc_task");
-        gr.get(scTaskSysID);
-        gr.u_asset_model = mod;
-        gr.u_asset = ast;
-  
-        var g = new GlideRecord("alm_asset");
-        g.get(ast);
+        var newAssetGr = new GlideRecord("alm_asset");
+        newAssetGr.get(newAssetSysID);
 
-        gr.u_asset_tag = g.asset_tag;
-        gr.u_asset_serial_number = g.serial_number;
-        gr.update();
+        scTaskGr.u_asset_tag = newAssetGr.asset_tag;
+        scTaskGr.u_asset_serial_number = newAssetGr.serial_number;
 
-        var taskSysId = eval("task_sys_id");
-        var gr = new GlideRecord("sc_task");
-        gr.get(taskSysId);
+        scTaskGr.update();
+
 
         var ritm = new GlideRecord("sc_req_item");
-        ritm.get(gr.request_item);
+        ritm.get(scTaskGr.request_item);
         var rit = ritm.sys_id;
 
         var rq = new GlideRecord("sc_request");
-        rq.get(gr.request);
+        rq.get(scTaskGr.request);
         var rfor = rq.u_contractor;
 
+        // free the old asset
         var asset = new GlideRecord("alm_asset");
         asset.addQuery("request_line", rit);
         asset.addQuery("install_status=6^substatus=reserved");
@@ -43,6 +43,8 @@ HardwareSubstituteUtil.prototype = {
           asset.reserved_for = "";
           asset.update();
         }
+
+        // reserve the new asset
         var ast2 = new GlideRecord("alm_asset");
         ast2.addQuery("sys_id", ast);
         ast2.query();
