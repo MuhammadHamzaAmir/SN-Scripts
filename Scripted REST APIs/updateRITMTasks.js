@@ -329,3 +329,26 @@
 
 
 })(request, response);
+
+function hardwareSubstitute(scTaskSysID){
+
+	var scTaskGr = new GlideRecord("sc_task");
+	scTaskGr.get(scTaskSysID);
+
+	var hardSubUtil = new HardwareSubstituteUtil();
+	var stockRoom = scTaskGR.u_sourced_to_stockroom;
+	var newModel = scTaskGR.request_item.cat_item.model;
+
+	var assets = hardSubUtil.getAvailableAssets();
+	if (assets && assets.length > 0){
+		//pick the first available one
+		hardSubUtil.substituteHardware(scTaskSysID, assets[0], newModel);
+	}else{
+		scTaskGR.work_notes = "No asset is available in the stockroom";
+		scTaskGr.update();
+		return false;
+	}
+
+
+
+}
