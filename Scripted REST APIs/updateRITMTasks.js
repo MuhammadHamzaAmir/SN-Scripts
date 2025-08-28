@@ -59,7 +59,7 @@
     //Deployment and Config Tasks - Config tasks are optional
     //If the hardware model does not include "return label" or "return lable",
     if (!(hardwareModel.includes("return lable") || hardwareModel.includes("return label"))) {
-        
+
         var configTaskExists = false;
         var deployTaskExists = false;
         //update config task - they are optional
@@ -125,8 +125,15 @@
                 "\n" +
                 "Shipping Quantity: " +
                 data["u_shipping_quantity"];
-			taskGr.setValue("state","3"); // Closed Complete
             taskGr.update();
+
+
+            var subResult = substituteHardware(taskGr.sys_id);
+            if (subResult) {
+                taskGr.setValue("state", "3"); // Closed Complete
+                taskGr.update();
+            }
+
             statusCode = 201;
             statusMsg = "Config Task is updated";
             statusResult = "Success";
@@ -202,8 +209,23 @@
                 "\n" +
                 "Shipping Quantity: " +
                 data["u_shipping_quantity"];
-			taskGr.setValue("state","3"); //Closed Complete
             taskGr.update();
+
+            if (!(configTaskExists)) {
+                var subResult = substituteHardware(taskGr.sys_id);
+                if (subResult) {
+                    taskGr.setValue("state", "3"); // Closed Complete
+                    taskGr.update();
+                }
+
+            }
+			else{
+				// just close the task
+				taskGr.setValue("state", "3"); // Closed Complete
+                taskGr.update();
+			}
+
+
             statusCode = 201;
             statusMsg = statusMsg + "," + "Deploy Task is updated";
             statusResult = "Success";
@@ -235,7 +257,7 @@
             return;
         }
     } else if (hardwareModel.includes("return lable") || hardwareModel.includes("return label")) {
-		
+
         //Update Retrieval Tasks
         var taskGr = new GlideRecord("sc_task");
         taskGr.addEncodedQuery(
@@ -298,7 +320,7 @@
                 "\n" +
                 "Shipping Quantity: " +
                 data["u_shipping_quantity"];
-			taskGr.setValue("state","9"); //Awaiting User Info
+            taskGr.setValue("state", "9"); //Awaiting User Info
             taskGr.update();
             statusCode = 201;
             statusMsg = "Retrieve Task is updated";
@@ -330,27 +352,27 @@
 
 })(request, response);
 
-function hardwareSubstitute(scTaskSysID){
+function hardwareSubstitute(scTaskSysID) {
 
-	var scTaskGr = new GlideRecord("sc_task");
-	scTaskGr.get(scTaskSysID);
+    var scTaskGr = new GlideRecord("sc_task");
+    scTaskGr.get(scTaskSysID);
 
-	var hardSubUtil = new HardwareSubstituteUtil();
-	var stockRoom = scTaskGR.u_sourced_to_stockroom;
-	var newModel = scTaskGR.request_item.cat_item.model;
+    var hardSubUtil = new HardwareSubstituteUtil();
+    var stockRoom = scTaskGr.u_sourced_to_stockroom;
+    var newModel = scTaskGr.request_item.cat_item.model;
 
-	var assets = hardSubUtil.getAvailableAssets();
-	if (assets && assets.length > 0){
-		//pick the first available one
-		hardSubUtil.substituteHardware(scTaskSysID, assets[0], newModel);
-		scTaskGR.work_notes = "Asset is Substitued";
-		scTaskGr.update();
-		return true;
-	}else{
-		scTaskGR.work_notes = "No asset is available in the stockroom";
-		scTaskGr.update();
-		return false;
-	}
+    var assets = hardSubUtil.getAvailableAssets(stockRoom, newModel);
+    if (assets && assets.length > 0) {
+        //pick the first available one
+        hardSubUtil.substituteHardware(scTaskSysID, assets[0], newModel);
+        scTaskGr.work_notes = "Asset is Substituted";
+        scTaskGr.update();
+        return true;
+    } else {
+        scTaskGr.work_notes = "No asset is available in the stockroom";
+        scTaskGr.update();
+        return false;
+    }
 
 
 
