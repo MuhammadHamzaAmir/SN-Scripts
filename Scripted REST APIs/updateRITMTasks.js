@@ -343,6 +343,9 @@ function hardwareSubstitute(scTaskSysID){
 	if (assets && assets.length > 0){
 		//pick the first available one
 		hardSubUtil.substituteHardware(scTaskSysID, assets[0], newModel);
+		scTaskGR.work_notes = "Asset is Substitued";
+		scTaskGr.update();
+		return true;
 	}else{
 		scTaskGR.work_notes = "No asset is available in the stockroom";
 		scTaskGr.update();
