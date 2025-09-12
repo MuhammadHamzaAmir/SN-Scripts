@@ -132,7 +132,7 @@
             taskGr.update();
 
             if (substitute) {
-                var subResult = substituteHardware(taskGr.sys_id);
+                var subResult = hardwareSubstitute(taskGr.sys_id);
                 if (subResult) {
                     taskGr.setValue("state", "3"); // Closed Complete
                     taskGr.update();
@@ -218,7 +218,7 @@
 
             if (!(configTaskExists)) {
                 if (substitute) {
-                    var subResult = substituteHardware(taskGr.sys_id);
+                    var subResult = hardwareSubstitute(taskGr.sys_id);
                     if (subResult) {
                         taskGr.setValue("state", "3"); // Closed Complete
                         taskGr.update();
