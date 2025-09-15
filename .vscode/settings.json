@@ -1,0 +1,7 @@
+{
+    "telemetry.editStats.enabled": false,
+    "telemetry.feedback.enabled": false,
+    "dotnetAcquisitionExtension.enableTelemetry": false,
+    "geminicodeassist.enableTelemetry": false,
+    "cloudcode.enableTelemetry": false
+}
