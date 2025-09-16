@@ -132,7 +132,7 @@
             taskGr.update();
 
             if (substitute) {
-                var subResult = hardwareSubstitute(taskGr.sys_id);
+                var subResult = hardwareSubstitute(taskGr.sys_id, data["u_serial_number"]);
                 if (subResult) {
                     taskGr.setValue("state", "3"); // Closed Complete
                     taskGr.update();
@@ -218,7 +218,7 @@
 
             if (!(configTaskExists)) {
                 if (substitute) {
-                    var subResult = hardwareSubstitute(taskGr.sys_id);
+                    var subResult = hardwareSubstitute(taskGr.sys_id, data["u_serial_number"]);
                     if (subResult) {
                         taskGr.setValue("state", "3"); // Closed Complete
                         taskGr.update();
@@ -359,24 +359,32 @@
 
 })(request, response);
 
-function hardwareSubstitute(scTaskSysID) {
+function hardwareSubstitute(scTaskSysID, newAssetSerialNum) {
 
     var scTaskGr = new GlideRecord("sc_task");
     scTaskGr.get(scTaskSysID);
 
     var hardSubUtil = new HardwareSubstituteUtil();
+
     var stockRoom = scTaskGr.u_sourced_to_stockroom;
     var newModel = scTaskGr.request_item.cat_item.model;
 
-    var assets = hardSubUtil.getAvailableAssets(stockRoom, newModel);
+	var stockRoomDispValue = scTaskGr.getDisplayValue("u_sourced_to_stockroom");
+	var oldAsset = scTaskGr.getDisplayValue("");
+	var oldAssetSerialNum = scTaskGr.getValue("");
+
+    var assets = hardSubUtil.getAvailableAssetsBySerialNum(stockRoom, newModel, newAssetSerialNum);
     if (assets && assets.length > 0) {
-        //pick the first available one
+		
         hardSubUtil.substituteHardware(scTaskSysID, assets[0], newModel);
-        scTaskGr.work_notes = "Asset is Substituted";
+        var newAssetGr = new GlideRecord("alm_asset");
+        newAssetGr.get(assets[0]);
+
+        scTaskGr.work_notes = "Old Asset: " + oldAsset + " (Serial Number: " + oldAssetSerialNum + ") is Substituted with a New Asset: " + newAssetGr.display_name + " (Serial Number: " + newAssetSerialNum + ") from the Stockroom: " + stockRoomDispValue;
         scTaskGr.update();
         return true;
     } else {
-        scTaskGr.work_notes = "No asset is available in the stockroom";
+        scTaskGr.work_notes = "No asset with Serial Number: "+newAssetSerialNum+" is available in the stockroom: "+ stockRoomDispValue;
         scTaskGr.update();
         return false;
     }
