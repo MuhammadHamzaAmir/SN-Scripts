@@ -370,8 +370,8 @@ function hardwareSubstitute(scTaskSysID, newAssetSerialNum) {
     var newModel = scTaskGr.request_item.cat_item.model;
 
 	var stockRoomDispValue = scTaskGr.getDisplayValue("u_sourced_to_stockroom");
-	var oldAsset = scTaskGr.getDisplayValue("");
-	var oldAssetSerialNum = scTaskGr.getValue("");
+	var oldAsset = scTaskGr.getDisplayValue("u_asset");
+	var oldAssetSerialNum = scTaskGr.u_asset_serial_number;
 
     var assets = hardSubUtil.getAvailableAssetsBySerialNum(stockRoom, newModel, newAssetSerialNum);
     if (assets && assets.length > 0) {
