@@ -30,7 +30,7 @@ MSPAssetClientUtils.prototype = Object.extendsObject(AbstractAjaxProcessor, {
       "order received",
       "state",
       "substate",
-      "model id"
+      "model id",
     ];
 
     var res = true;
@@ -52,6 +52,26 @@ MSPAssetClientUtils.prototype = Object.extendsObject(AbstractAjaxProcessor, {
     parser.close();
 
     return res;
+  },
+
+  getEquipmentDetails: function () {
+    var equipSysID = this.getParameter("sysparm_equipment_sys_id");
+    var equipmentGR = new GlideRecord("alm_hardware");
+    if (equipmentGR.get(equipSysID)) {
+      var details = {};
+      details.asset_tag = equipmentGR.getValue("asset_tag");
+      details.serial_number = equipmentGR.getValue("serial_number");
+      details.assigned_to = equipmentGR.getValue("assigned_to");
+      details.active = equipmentGR.getValue("u_active");
+      details.name = equipmentGR.getValue("u_customer_name");
+      details.type = equipmentGR.getValue("u_type");
+      details.managed_by = equipmentGR.getValue("managed_by");
+      details.state = equipmentGR.getValue("install_status");
+      details.substate = equipmentGR.getValue("substatus");
+      return JSON.stringify(details);
+    }else{
+      return "{}";
+    }
   },
 
   type: "MSPAssetClientUtils",
