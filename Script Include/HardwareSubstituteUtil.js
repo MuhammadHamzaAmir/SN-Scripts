@@ -65,7 +65,6 @@ HardwareSubstituteUtil.prototype = {
     var availableAssets = new GlideRecord("alm_asset");
     availableAssets.addQuery("install_status=6^substatus=available");
     availableAssets.addQuery("stockroom", stockRoom);
-    availableAssets.addQuery("model", assetModel);
     availableAssets.addQuery("serial_number", serialNumber);
     availableAssets.query();
 

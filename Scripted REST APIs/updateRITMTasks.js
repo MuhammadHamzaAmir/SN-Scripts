@@ -34,7 +34,6 @@
 
     if (ritmGr.next()) {
         ritmGr.setValue("u_order_number", data["u_order_number"]);
-        ritmGr.work_notes = "Order Number: " + data["u_order_number"];
         ritmGr.update();
     } else {
         var errorResponse = {
@@ -83,6 +82,8 @@
             taskGr.setValue("u_shipment_tracking", data["u_tracking_number"]);
             taskGr.setValue("u_carrier", data["u_carrier"]);
             taskGr.setValue("u_item_id", data["u_item_id"]);
+            taskGr.setValue("u_ship_date", data["u_ship_date"]);
+
 
             taskGr.work_notes =
                 "Serial Number: " +
@@ -168,6 +169,8 @@
             taskGr.setValue("u_shipment_tracking", data["u_tracking_number"]);
             taskGr.setValue("u_carrier", data["u_carrier"]);
             taskGr.setValue("u_item_id", data["u_item_id"]);
+            taskGr.setValue("u_ship_date", data["u_ship_date"]);
+
 
             taskGr.work_notes =
                 "Serial Number: " +
@@ -281,6 +284,8 @@
             taskGr.setValue("u_shipment_tracking", data["u_tracking_number"]);
             taskGr.setValue("u_carrier", data["u_carrier"]);
             taskGr.setValue("u_item_id", data["u_item_id"]);
+            taskGr.setValue("u_ship_date", data["u_ship_date"]);
+
 
             taskGr.work_notes =
                 "Serial Number: " +
