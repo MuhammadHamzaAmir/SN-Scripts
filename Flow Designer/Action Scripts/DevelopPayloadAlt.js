@@ -6,7 +6,7 @@
   var agg = new GlideAggregate("u_get_asset_data_from_azure_data_lake");
   agg.addAggregate("COUNT");
   agg.addEncodedQuery(
-    "u_invoice_onyx_id=100118690^u_record_status=In Progress^u_payload_sent=false^u_master_rmISNOTEMPTY^u_master_rmSTARTSWITHRITM^u_altria_order_type=Bundle",
+    "u_invoice_onyx_id=100118690^u_record_status=In Progress^u_payload_sent=false^u_master_rmISNOTEMPTY^u_master_rmSTARTSWITHRITM^u_altria_order_type=Bundle^sys_created_onONToday@javascript:gs.beginningOfToday()@javascript:gs.endOfToday()",
   );
   agg.groupBy("u_order_number");
   agg.groupBy("u_master_rm");
