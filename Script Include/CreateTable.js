@@ -7,7 +7,14 @@ CGTable.prototype = {
     // c_code (set as unique), v_code (set as unique), v_description,
     // c_description, and description (set as Display Value).
 
+    
+
     gs.getSession().impersonate("<sys_id_of_user>"); // sys_id of <admin>
+    
+    // use below one if the unimpersonate method fails
+    // use the following code to impersonate a user:
+    var loggedInUser = gs.getUserID();
+    var impersonate = global.ImpersonateUser().glideImpersonateUser("<sys_id_of_user>");  
 
     var currentAppID = gs.getCurrentApplicationId();
     gs.setCurrentApplicationId("2fbbfeec07a46110ab46f1d08c1ed0d2");
@@ -567,7 +574,10 @@ CGTable.prototype = {
 
     gs.setCurrentApplicationId(currentAppID);
 
+
     gs.getSession().onlineUnimpersonate();
+    // use the below code if the above one fails for ending the impersonation
+    var unImpersonate = global.ImpersonateUser().glideImpersonateUser(""+loggedInUser);  
 
     // 	return JSON.stringify({});
   },
