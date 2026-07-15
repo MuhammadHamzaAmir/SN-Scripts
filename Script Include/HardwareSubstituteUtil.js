@@ -40,10 +40,10 @@ HardwareSubstituteUtil.prototype = {
     }
 
     // reserve the new asset
-    newAssetGr.install_status = 6;
-    newAssetGr.substatus = "reserved";
+    newAssetGr.install_status = 1; // 1 = In Use
     newAssetGr.request_line = ritmSysID;
     newAssetGr.reserved_for = rfor;
+    newAssetGr.u_function = "Dedicated Device";
     newAssetGr.update();
   },
 
